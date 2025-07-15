@@ -1,19 +1,67 @@
 using System.Collections;
+using UnityEngine;
+using DG.Tweening;
 using Modules.Core.UI.Screens.Base_Screen;
 using Modules.New;
-using UnityEngine;
 
 public class BootScreen : BaseScreen
 {
+    [Header("Loading Settings")]
     [SerializeField] private LoadingSlider _loadingSlider;
-    [SerializeField] private float _loadingTime;
+    [SerializeField] private float _loadingTime = 5f;
+
+    [Header("Balloon Settings")]
+    [SerializeField] private RectTransform[] _balloons;
+    [SerializeField] private float _flyDurationToCenter = 1.5f;
+    [SerializeField] private float _flyDurationToTop = 1.5f;
+    [SerializeField] private float _waitAtCenter = 2f;
+
+    private float[] _centerPositions; 
 
     public override IEnumerator Open()
-     {
-         yield return _loadingSlider.RunLoading(_loadingTime);
-
-         yield return base.Open();
-     }
+    {
+        _centerPositions = new float[_balloons.Length];
+        
+        for (int i = 0; i < _balloons.Length; i++)
+        {
+            _centerPositions[i] = UIPositionHelper.GetCanvasCenterPosition(_balloons[i]).y;
+        }
+        
+        foreach (var balloon in _balloons)
+        {
+            Vector3 startPos = balloon.anchoredPosition;
+            balloon.anchoredPosition = new Vector2(startPos.x, -Screen.height - 500);
+        }
+        
+        Sequence flyToCenterSequence = DOTween.Sequence();
+        
+        for (int i = 0; i < _balloons.Length; i++)
+        {
+            RectTransform balloon = _balloons[i];
+            flyToCenterSequence.Join(
+                balloon.DOAnchorPosY(_centerPositions[i], _flyDurationToCenter)
+                    .SetEase(Ease.OutCubic)
+            );
+        }
+        yield return flyToCenterSequence.WaitForCompletion();
+        
+        yield return new WaitForSeconds(_waitAtCenter);
+        
+        yield return _loadingSlider.RunLoading(_loadingTime);
+        
+        Sequence flyToTopSequence = DOTween.Sequence();
+        
+        foreach (var balloon in _balloons)
+        {
+            flyToTopSequence.Join(
+                balloon.DOAnchorPosY(Screen.height * 3, _flyDurationToTop)
+                    .SetEase(Ease.InCubic)
+            );
+        }
+        yield return flyToTopSequence.WaitForCompletion();
+        
+        yield return base.Open();
+    }
 
     protected override IEnumerator Exit()
     {
