@@ -14,6 +14,7 @@ public class LoadingScreen : MonoBehaviour
     private IEnumerator LoadingCoroutine()
     {
         float loadingTime = 5f;
+        
         float elapsedTime = 0f;
 
         while (elapsedTime < loadingTime)
