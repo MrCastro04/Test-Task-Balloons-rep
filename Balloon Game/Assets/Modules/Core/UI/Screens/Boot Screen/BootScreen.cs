@@ -22,19 +22,27 @@ public class BootScreen : BaseScreen
     {
         _centerPositions = new float[_balloons.Length];
         
+        foreach (var balloon in _balloons)
+        {
+            if(balloon.gameObject.activeSelf == false)
+                continue;
+            
+            balloon.gameObject.SetActive(false);
+        }
+        
         for (int i = 0; i < _balloons.Length; i++)
         {
             _centerPositions[i] = UIPositionHelper.GetCanvasCenterPosition(_balloons[i]).y;
-        }
-        
-        foreach (var balloon in _balloons)
-        {
+
+            RectTransform balloon = _balloons[i];
             Vector3 startPos = balloon.anchoredPosition;
+
             balloon.anchoredPosition = new Vector2(startPos.x, -Screen.height - 500);
+            balloon.gameObject.SetActive(true);
         }
-        
+
+       
         Sequence flyToCenterSequence = DOTween.Sequence();
-        
         for (int i = 0; i < _balloons.Length; i++)
         {
             RectTransform balloon = _balloons[i];
@@ -44,13 +52,13 @@ public class BootScreen : BaseScreen
             );
         }
         yield return flyToCenterSequence.WaitForCompletion();
-        
+
+       
         yield return new WaitForSeconds(_waitAtCenter);
-        
         yield return _loadingSlider.RunLoading(_loadingTime);
-        
+
+      
         Sequence flyToTopSequence = DOTween.Sequence();
-        
         foreach (var balloon in _balloons)
         {
             flyToTopSequence.Join(
@@ -60,11 +68,18 @@ public class BootScreen : BaseScreen
         }
         yield return flyToTopSequence.WaitForCompletion();
         
-        yield return base.Open();
+        yield return Exit();
     }
 
     protected override IEnumerator Exit()
     {
-        yield return null;
+        foreach (var balloon in _balloons)
+        {
+            balloon.gameObject.SetActive(false);
+        }
+        
+        _loadingSlider.gameObject.SetActive(false);
+        
+        return base.Exit();
     }
 }

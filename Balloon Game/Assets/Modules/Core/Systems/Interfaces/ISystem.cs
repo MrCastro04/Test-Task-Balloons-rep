@@ -1,4 +1,4 @@
-﻿namespace Modules.New
+﻿namespace Modules.Core.Systems.Interfaces
 {
     public interface ISystem
     {

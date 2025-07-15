@@ -1,8 +1,9 @@
 using System.Collections;
 using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.Systems.Interfaces;
 using Modules.Core.UI.Screens.Base_Screen;
-using Modules.New;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CanvasSystem : MonoBehaviour, ISystem
@@ -28,24 +29,40 @@ public class CanvasSystem : MonoBehaviour, ISystem
     {
         _baseScreens = baseScreens;
 
+        foreach (var screen in baseScreens)
+        {
+            if (screen == _baseScreens[0])
+            {
+                continue;
+            }
+            
+            screen.gameObject.SetActive(false);
+        }
+
         BaseScreen bootScreen = _baseScreens[0];
 
-        yield return FadeIn();
+        OpenScreenGA openScreenBoot = new(bootScreen);
 
-        yield return bootScreen.Open();
+        ActionSystem.Instance.Perform(openScreenBoot);
 
-        yield return FadeOut();
+        yield return new WaitUntil(() => ActionSystem.Instance.IsPerforming == false); 
 
-        OpenScreenGA openScreenGa = new(_baseScreens[1]);
+        OpenScreenGA openScreenMenu = new(_baseScreens[1]);
 
-        ActionSystem.Instance.Perform(openScreenGa);
+        ActionSystem.Instance.Perform(openScreenMenu);
     }
 
     private IEnumerator OpenScreenPeformer(OpenScreenGA openScreenGa)
     {
-        yield return FadeIn();
+        BaseScreen nextScreen = openScreenGa.NextScreen;
+        
+        _canvasGroup.alpha = 0f;
 
-        yield return openScreenGa.NextScreen.Open();
+        yield return FadeIn();
+        
+        nextScreen.gameObject.SetActive(true);
+
+        yield return nextScreen.Open();
     }
 
     private IEnumerator CloseScreenPerformer(CloseScreenGA closeScreenGa)
@@ -57,12 +74,15 @@ public class CanvasSystem : MonoBehaviour, ISystem
         if (currentIndex > 0)
         {
             BaseScreen previousScreen = _baseScreens[currentIndex - 1];
-
-            OpenScreenGA openScreenGa = new(previousScreen);
-
-            ActionSystem.Instance.Perform(openScreenGa);
+            
+            previousScreen.gameObject.SetActive(true);
+            _canvasGroup.alpha = 0f;
+            
+            yield return FadeIn();
+            yield return previousScreen.Open();
         }
     }
+
 
     private IEnumerator FadeIn()
     {
