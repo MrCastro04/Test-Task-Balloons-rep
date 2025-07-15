@@ -1,6 +1,5 @@
 using System.Collections;
 using Modules.Core.UI.Screens.Base_Screen;
-using Modules.New;
 using UnityEngine;
 
 public class GameBoot : MonoBehaviour
