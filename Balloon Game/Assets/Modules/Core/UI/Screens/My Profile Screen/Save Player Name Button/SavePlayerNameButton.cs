@@ -11,6 +11,7 @@ namespace Modules.Core.UI.Screens.My_Profile_Screen.Save_Player_Name_Button
         protected override void OnClickAction()
         {
             string playerName = _nameInputField.text;
+            
             ActionSystem.Instance.Perform(new SavePlayerNameGA(playerName));
         }
     }

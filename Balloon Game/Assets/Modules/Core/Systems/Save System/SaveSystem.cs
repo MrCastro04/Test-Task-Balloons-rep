@@ -27,6 +27,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         PlayerPrefs.SetString(PlayerNameKey, savePlayerNameGa.PlayerName);
         PlayerPrefs.Save();
         Debug.Log("Имя сохранено: " + savePlayerNameGa.PlayerName);
+        
         yield return null;
     }
 
@@ -39,12 +40,33 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         yield return null;
     }
 
-    public string LoadPlayerName() =>
-        PlayerPrefs.GetString(PlayerNameKey, "Player");
+    public string LoadPlayerName()
+    {
+        if (PlayerPrefs.HasKey(PlayerNameKey) == false)
+        {
+            return "Player";
+        }
+        
+        return PlayerPrefs.GetString(PlayerNameKey);
+    }
 
-    public float LoadSoundVolume() =>
-        PlayerPrefs.GetFloat(SoundVolumeKey, 1f);
+    public float LoadSoundVolume()
+    {
+        if (PlayerPrefs.HasKey(SoundVolumeKey) == false)
+        {
+            return 0.5f;
+        }
+        
+        return PlayerPrefs.GetFloat(SoundVolumeKey);
+    }
 
-    public float LoadMusicVolume() =>
-        PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+    public float LoadMusicVolume()
+    {
+        if (PlayerPrefs.HasKey(MusicVolumeKey) == false)
+        {
+            return 0.5f;
+        }
+
+        return PlayerPrefs.GetFloat(MusicVolumeKey);
+    }
 }
