@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Modules;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Utility.Singleton;
 using UnityEngine;
@@ -16,11 +17,13 @@ public class SoundSystem : Singleton<SoundSystem>
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<SaveSettingsGA>(ApplySettingsPerformer);
+        ActionSystem.AttachPerformer<ChangeVolumeGA>(ChangeVolumePerformer); 
     }
 
     private void OnDisable()
     {
         ActionSystem.DetachPerformer<SaveSettingsGA>();
+        ActionSystem.DetachPerformer<ChangeVolumeGA>();
     }
 
     private void Start()
@@ -34,6 +37,30 @@ public class SoundSystem : Singleton<SoundSystem>
     private IEnumerator ApplySettingsPerformer(SaveSettingsGA ga)
     {
         ApplySettings();
+        yield return null;
+    }
+
+    private IEnumerator ChangeVolumePerformer(ChangeVolumeGA ga)
+    {
+        switch (ga.VolumeType)
+        {
+            case VolumeType.Music:
+                _musicSource.volume = Mathf.Clamp01(_musicSource.volume + ga.Delta);
+                PlayerPrefs.SetFloat("MusicVolume", _musicSource.volume);
+                break;
+
+            case VolumeType.Sound:
+                _soundSource.volume = Mathf.Clamp01(_soundSource.volume + ga.Delta);
+                PlayerPrefs.SetFloat("SoundVolume", _soundSource.volume);
+                break;
+        }
+
+        PlayerPrefs.Save();
+
+        Debug.Log($"Громкость изменена: {ga.VolumeType} = {(ga.VolumeType == VolumeType.Music ? _musicSource.volume : _soundSource.volume):0.00}");
+        
+        SettingsScreen.Instance?.UpdateSliders(_soundSource.volume, _musicSource.volume);
+
         yield return null;
     }
 
