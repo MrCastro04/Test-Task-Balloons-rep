@@ -8,7 +8,7 @@ using Modules.New;
 
 public class BootScreen : BaseScreen
 {
-    [SerializeField] private BaseScreen _mainMenuScreen;
+    [SerializeField] private BaseScreen _nextScreen;
 
     [Header("Loading Settings")]
     [SerializeField] private LoadingSlider _loadingSlider;
@@ -74,7 +74,7 @@ public class BootScreen : BaseScreen
         
         yield return Exit();
 
-        ActionSystem.Instance.Perform(new OpenScreenGA(_mainMenuScreen));
+        ActionSystem.Instance.Perform(new OpenScreenGA(_nextScreen));
     }
 
     protected override IEnumerator Exit()
