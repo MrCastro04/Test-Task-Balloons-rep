@@ -1,11 +1,15 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using Modules.Core.Game_Actions;
+using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.UI.Screens.Base_Screen;
 using Modules.New;
 
 public class BootScreen : BaseScreen
 {
+    [SerializeField] private BaseScreen _mainMenuScreen;
+
     [Header("Loading Settings")]
     [SerializeField] private LoadingSlider _loadingSlider;
     [SerializeField] private float _loadingTime = 5f;
@@ -69,6 +73,8 @@ public class BootScreen : BaseScreen
         yield return flyToTopSequence.WaitForCompletion();
         
         yield return Exit();
+
+        ActionSystem.Instance.Perform(new OpenScreenGA(_mainMenuScreen));
     }
 
     protected override IEnumerator Exit()
