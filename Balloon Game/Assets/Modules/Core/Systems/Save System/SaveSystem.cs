@@ -7,15 +7,19 @@ using Modules.Core.Utility.Singleton;
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
     private const string PlayerNameKey = "PlayerName";
+    private const string SoundVolumeKey = "SoundVolume";
+    private const string MusicVolumeKey = "MusicVolume";
 
     public void OnEnable()
     {
         ActionSystem.AttachPerformer<SavePlayerNameGA>(SavePlayerNamePerformer);
+        ActionSystem.AttachPerformer<SaveSettingsGA>(SaveSettingsPerformer);
     }
 
     public void OnDisable()
     {
         ActionSystem.DetachPerformer<SavePlayerNameGA>();
+        ActionSystem.DetachPerformer<SaveSettingsGA>();
     }
 
     private IEnumerator SavePlayerNamePerformer(SavePlayerNameGA savePlayerNameGa)
@@ -26,8 +30,21 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         yield return null;
     }
 
-    public string LoadPlayerName()
+    private IEnumerator SaveSettingsPerformer(SaveSettingsGA saveSettingsGa)
     {
-        return PlayerPrefs.GetString(PlayerNameKey, "Player");
+        PlayerPrefs.SetFloat(SoundVolumeKey, saveSettingsGa.SoundVolume);
+        PlayerPrefs.SetFloat(MusicVolumeKey, saveSettingsGa.MusicVolume);
+        PlayerPrefs.Save();
+        Debug.Log($"Настройки сохранены: Sound={saveSettingsGa.SoundVolume}, Music={saveSettingsGa.MusicVolume}");
+        yield return null;
     }
+
+    public string LoadPlayerName() =>
+        PlayerPrefs.GetString(PlayerNameKey, "Player");
+
+    public float LoadSoundVolume() =>
+        PlayerPrefs.GetFloat(SoundVolumeKey, 1f);
+
+    public float LoadMusicVolume() =>
+        PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
 }

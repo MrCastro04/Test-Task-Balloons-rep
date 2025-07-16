@@ -1,22 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using Modules.Core.Game_Actions;
+﻿using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.UI.Screens.Base_Screen;
+using UnityEngine;
 
-public class BackButton : MonoBehaviour
+namespace Modules.Core.UI.Back_Button
 {
-    [SerializeField] private Button _button;
-    [SerializeField] private BaseScreen _currentScreen;
-
-    private void Awake()
+    public class BackButton : BaseButton
     {
-        _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(OnBack);
-    }
+        [SerializeField] private BaseScreen _currentScreen;
 
-    private void OnBack()
-    {
-        ActionSystem.Instance.Perform(new CloseScreenGA(_currentScreen));
+        protected override void OnClickAction()
+        {
+            if (_currentScreen != null)
+                ActionSystem.Instance.Perform(new CloseScreenGA(_currentScreen));
+        }
     }
 }
