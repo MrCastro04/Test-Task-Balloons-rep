@@ -1,21 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using Modules.Core.Systems.Action_System.Scripts;
 using TMPro;
-using Modules.Core.Systems.Action_System.Scripts;
+using UnityEngine;
 
-public class SavePlayerNameButton : MonoBehaviour
+namespace Modules.Core.UI.Screens.My_Profile_Screen.Save_Player_Name_Button
 {
-    [SerializeField] private TMP_InputField _nameInputField;
-    [SerializeField] private Button _saveButton;
-
-    private void Awake()
+    public class SavePlayerNameButton : BaseButton
     {
-        _saveButton.onClick.AddListener(SaveName);
-    }
+        [SerializeField] private TMP_InputField _nameInputField;
 
-    private void SaveName()
-    {
-        string playerName = _nameInputField.text;
-        ActionSystem.Instance.Perform(new SavePlayerNameGA(playerName));
+        protected override void OnClickAction()
+        {
+            string playerName = _nameInputField.text;
+            
+            ActionSystem.Instance.Perform(new SavePlayerNameGA(playerName));
+        }
     }
 }
