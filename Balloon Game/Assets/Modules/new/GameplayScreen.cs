@@ -7,9 +7,8 @@ public class GameplayScreen : BaseScreen
 {
     public override IEnumerator Open()
     {
-        Debug.Log("dsdsdsa");
         ActionSystem.Instance.AddReaction(new StartLevelGA());
-      
+        
         yield return null;
     }
 }

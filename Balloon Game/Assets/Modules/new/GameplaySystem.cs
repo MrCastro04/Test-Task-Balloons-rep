@@ -1,17 +1,23 @@
 ﻿using System.Collections;
+using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.UI.Screens.Base_Screen;
 using Modules.Core.Utility.Singleton;
 using UnityEngine;
 using TMPro;
 
 public class GameplaySystem : Singleton<GameplaySystem>
 {
+    [Header("WIN/LOSE Settings")]
+    [SerializeField] private BaseScreen _winScreen;
+    [SerializeField] private BaseScreen _loseScreen;
+    
     [Header("Level Settings")]
     [SerializeField] private BalloonPool _balloonPool;
     [SerializeField] private float _levelTimer = 30f;
     [SerializeField] private float _flyDuration = 3f;
     [SerializeField] private float _spawnOffset = 5f;
-    [SerializeField] private int _targetScore = 30;
+    [SerializeField] private int _targetScore = 15;
 
     [Header("Spawn Area (3D)")]
     [SerializeField] private Transform _spawnAreaCenter; 
@@ -20,7 +26,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
     [Header("UI")]
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private TMP_Text _balloonsLeftText;
 
     private float _currentTime;
     private int _currentScore;
@@ -52,7 +57,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         UpdateTimerUI();
         UpdateScoreUI();
-        UpdateBalloonsLeftUI();
 
         _levelRoutine = StartCoroutine(LevelTimerRoutine());
     }
@@ -77,9 +81,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
         if (balloon == null) return;
 
         _balloonsLeft--;
-        UpdateBalloonsLeftUI();
 
-      
         balloon.transform.SetParent(null);
 
        
@@ -117,8 +119,16 @@ public class GameplaySystem : Singleton<GameplaySystem>
         }
 
         if (_currentScore >= _targetScore)
+        {
+            ActionSystem.Instance.Perform(new OpenScreenGA (_winScreen));
+            
             Debug.Log("You WIN!");
+        }
+
         else
+        {
+            ActionSystem.Instance.Perform(new OpenScreenGA (_loseScreen));
+        }
             Debug.Log("You LOSE!");
     }
 
@@ -132,11 +142,5 @@ public class GameplaySystem : Singleton<GameplaySystem>
     {
         if (_scoreText != null)
             _scoreText.text = $"Score: {_currentScore}/{_targetScore}";
-    }
-
-    private void UpdateBalloonsLeftUI()
-    {
-        if (_balloonsLeftText != null)
-            _balloonsLeftText.text = $"Balloons left: {_balloonsLeft}";
     }
 }

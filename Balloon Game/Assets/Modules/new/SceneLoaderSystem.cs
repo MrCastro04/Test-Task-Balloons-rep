@@ -1,4 +1,5 @@
 ﻿
+    using System.Collections;
     using Modules.Core.Systems.Action_System.Scripts;
     using Modules.Core.Utility.Singleton;
     using UnityEngine;
@@ -16,7 +17,7 @@
             ActionSystem.DetachPerformer<LoadLevelSceneGA>();
         }
 
-        private System.Collections.IEnumerator LoadLevelScenePerformer(LoadLevelSceneGA ga)
+        private IEnumerator LoadLevelScenePerformer(LoadLevelSceneGA ga)
         {
             SceneManager.LoadScene(ga.LevelIndex);
             yield return null;
