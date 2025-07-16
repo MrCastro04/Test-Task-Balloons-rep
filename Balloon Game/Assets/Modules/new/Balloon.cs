@@ -1,58 +1,51 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Image))]
-public class Balloon : MonoBehaviour, IPointerClickHandler
+public class Balloon : MonoBehaviour
 {
-    [SerializeField] private Image _balloonImage;
-    [SerializeField] private Color[] _balloonColors;
-
-    private RectTransform _rectTransform;
     private Tween _flyTween;
     private Tween _swayTween;
     private bool _isPopped;
 
     public event Action<Balloon> OnPopped;
 
-    private void Awake()
+    private void OnMouseDown()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        Pop();
     }
 
-    public void Fly(float endY, float duration)
+    public void FlyTo3D(Vector3 targetPos, float duration)
     {
         _isPopped = false;
         KillTweens();
-        SetRandomColor();
-
-        float startX = UnityEngine.Random.Range(-200f, 200f);
-        _rectTransform.anchoredPosition = new Vector2(startX, _rectTransform.anchoredPosition.y);
-
-        _swayTween = _rectTransform
-            .DOAnchorPosX(startX + UnityEngine.Random.Range(-50f, 50f), 1.5f)
+        
+        Vector3 startPos = transform.position;
+        startPos.x += UnityEngine.Random.Range(-2f, 2f);
+        startPos.z += UnityEngine.Random.Range(-2f, 2f);
+        transform.position = startPos;
+        
+        _swayTween = transform
+            .DOMoveX(startPos.x + UnityEngine.Random.Range(-0.5f, 0.5f), 1.5f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
-
-        _flyTween = _rectTransform
-            .DOAnchorPosY(endY, duration)
+        
+        _flyTween = transform
+            .DOMoveY(targetPos.y, duration)
             .SetEase(Ease.InCubic)
-            .OnComplete(DestroyBalloon); // Улетел – уничтожаем
+            .OnComplete(() =>
+            {
+                KillTweens();
+                Destroy(gameObject);
+            }); 
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        PopBalloon();
-    }
-
-    private void PopBalloon()
+    public void Pop()
     {
         if (_isPopped) return;
         _isPopped = true;
 
-        Debug.Log("Balloon popped!");
+        Debug.Log($"Balloon popped: {gameObject.name}");
         DestroyBalloon();
     }
 
@@ -62,12 +55,6 @@ public class Balloon : MonoBehaviour, IPointerClickHandler
         OnPopped?.Invoke(this);
         gameObject.SetActive(false);
         Destroy(gameObject, 0.05f);
-    }
-
-    private void SetRandomColor()
-    {
-        if (_balloonColors.Length > 0)
-            _balloonImage.color = _balloonColors[UnityEngine.Random.Range(0, _balloonColors.Length)];
     }
 
     private void KillTweens()

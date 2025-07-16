@@ -6,13 +6,11 @@ public class BalloonPool : MonoBehaviour
     [SerializeField] private GameObject _balloonPrefab;
     [SerializeField] private Transform _poolParent;
 
-    private Queue<Balloon> _balloonQueue = new Queue<Balloon>();
-    private int _maxCount;
+    private Queue<Balloon> _balloonQueue = new ();
 
     public void PopulatePool(int count)
     {
         _balloonQueue.Clear();
-        _maxCount = count;
 
         for (int i = 0; i < count; i++)
         {
@@ -24,7 +22,7 @@ public class BalloonPool : MonoBehaviour
 
     public Balloon GetBalloon()
     {
-        if (_balloonQueue.Count == 0) return null; // Пул пуст
+        if (_balloonQueue.Count == 0) return null; 
         var balloon = _balloonQueue.Dequeue();
         balloon.gameObject.SetActive(true);
         return balloon;

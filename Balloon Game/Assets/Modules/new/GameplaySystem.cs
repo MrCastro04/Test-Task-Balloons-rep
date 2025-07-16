@@ -10,11 +10,12 @@ public class GameplaySystem : Singleton<GameplaySystem>
     [SerializeField] private BalloonPool _balloonPool;
     [SerializeField] private float _levelTimer = 30f;
     [SerializeField] private float _flyDuration = 3f;
-    [SerializeField] private float _spawnOffset = 50f;
+    [SerializeField] private float _spawnOffset = 5f;
     [SerializeField] private int _targetScore = 30;
 
-    [Header("Spawn Area")]
-    [SerializeField] private RectTransform _spawnArea;
+    [Header("Spawn Area (3D)")]
+    [SerializeField] private Transform _spawnAreaCenter; 
+    [SerializeField] private Vector3 _spawnAreaSize = new Vector3(10f, 0f, 10f);
 
     [Header("UI")]
     [SerializeField] private TMP_Text _timerText;
@@ -46,7 +47,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
         _currentTime = _levelTimer;
         _currentScore = 0;
 
-        _balloonPool.PopulatePool(30); // Количество шаров в пуле
+        _balloonPool.PopulatePool(30);
         _balloonsLeft = 30;
 
         UpdateTimerUI();
@@ -73,25 +74,28 @@ public class GameplaySystem : Singleton<GameplaySystem>
     private void SpawnBalloon()
     {
         var balloon = _balloonPool.GetBalloon();
-        if (balloon == null) return; // Пул пуст
+        if (balloon == null) return;
 
         _balloonsLeft--;
         UpdateBalloonsLeftUI();
 
-        balloon.transform.SetParent(_spawnArea, false);
+      
+        balloon.transform.SetParent(null);
 
-        float halfWidth = _spawnArea.rect.width * 0.5f;
-        float halfHeight = _spawnArea.rect.height * 0.5f;
+       
+        Vector3 spawnPos = _spawnAreaCenter.position + new Vector3(
+            Random.Range(-_spawnAreaSize.x / 2f, _spawnAreaSize.x / 2f),
+            -_spawnOffset,
+            Random.Range(-_spawnAreaSize.z / 2f, _spawnAreaSize.z / 2f)
+        );
 
-        float startX = Random.Range(-halfWidth, halfWidth);
-        float startY = -halfHeight - _spawnOffset;
+        balloon.transform.position = spawnPos;
 
-        balloon.GetComponent<RectTransform>().anchoredPosition = new Vector2(startX, startY);
-
-        float endY = halfHeight + _spawnOffset;
+     
+        Vector3 targetPos = new Vector3(spawnPos.x, _spawnAreaCenter.position.y + _spawnOffset, spawnPos.z);
 
         balloon.OnPopped += OnBalloonPopped;
-        balloon.Fly(endY, _flyDuration);
+        balloon.FlyTo3D(targetPos, _flyDuration); 
     }
 
     private void OnBalloonPopped(Balloon balloon)

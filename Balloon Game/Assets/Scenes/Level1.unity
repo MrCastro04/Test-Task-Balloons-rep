@@ -122,6 +122,97 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &36848299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36848300}
+  - component: {fileID: 36848301}
+  - component: {fileID: 36848302}
+  m_Layer: 0
+  m_Name: Input Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &36848300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36848299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &36848301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36848299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 0c46d47e7dba9b649ba32fa07aeb6e6c, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 36848302}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 75e1f2ed-4321-4515-a5e5-d152a1cc0daa
+    m_ActionName: Gameplay/Click[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 587038354}
+--- !u!114 &36848302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36848299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bb3f0b041fb4e4d962293fa1fdd492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &219619997
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +583,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 350057735394706583, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 587038354}
+    - target: {fileID: 350057735394706583, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 445657075488141770, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_Name
       value: 'Main Canvas '
@@ -910,7 +1009,8 @@ MonoBehaviour:
   _flyDuration: 10
   _spawnOffset: 50
   _targetScore: 30
-  _spawnArea: {fileID: 444377137}
+  _spawnAreaCenter: {fileID: 444377137}
+  _spawnAreaSize: {x: 10, y: 0, z: 10}
   _timerText: {fileID: 863072297}
   _scoreText: {fileID: 760936217}
   _balloonsLeftText: {fileID: 0}
@@ -1146,7 +1246,7 @@ PrefabInstance:
     - target: {fileID: 8183422163499165346, guid: 7e4b6e5770a80ec4f972c6096c658a5e, type: 3}
       propertyPath: _balloonPrefab
       value: 
-      objectReference: {fileID: 731454935480431417, guid: 6a0072b22d0696f4dbfd21aa6f5e1851, type: 3}
+      objectReference: {fileID: 2263775762960912571, guid: 0110d84ef81fc0e4ba14399e19d0ce8b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1160,3 +1260,4 @@ SceneRoots:
   - {fileID: 763678859}
   - {fileID: 1424845810}
   - {fileID: 912101685}
+  - {fileID: 36848300}
