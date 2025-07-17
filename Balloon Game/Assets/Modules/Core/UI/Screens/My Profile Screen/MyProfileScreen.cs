@@ -14,6 +14,7 @@ public class MyProfileScreen : BaseScreen
 
     public List<Sprite> AvailableAvatars => _availableAvatars;
     public Image AvatarImage => _avatarImage;
+    public TMP_Text PlayerNameLabel => _playerNameLabel;
 
     public override IEnumerator Open()
     {
@@ -25,7 +26,7 @@ public class MyProfileScreen : BaseScreen
         yield return base.Open();
     }
 
-    private void LoadSavedAvatar()
+    public void LoadSavedAvatar()
     {
         string avatarName = SaveSystem.Instance.LoadPlayerAvatarPath();
         if (string.IsNullOrEmpty(avatarName)) return;
