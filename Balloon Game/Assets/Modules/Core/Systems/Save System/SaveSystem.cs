@@ -11,6 +11,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     private const string MusicVolumeKey = "MusicVolume";
     private const string LastScoreKey = "LastScore";
     private const string LastRewardKey = "LastReward";
+    private const string SelectedSkinIndexKey = "SelectedSkinIndex";
     private const int DefaultReward = 1000;
 
     public void OnEnable()
@@ -48,6 +49,16 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         return PlayerPrefs.HasKey(key) && PlayerPrefs.GetInt(key) == 1;
     }
 
+    public void SaveSelectedSkinIndex(int skinIndex)
+    {
+        PlayerPrefs.SetInt(SelectedSkinIndexKey, skinIndex);
+        PlayerPrefs.Save();
+    }
+
+    public int LoadSelectedSkinIndex()
+    {
+        return PlayerPrefs.HasKey(SelectedSkinIndexKey) ? PlayerPrefs.GetInt(SelectedSkinIndexKey) : -1;
+    }
 
     public void AddScoreAndReward(int score, int rewardToAdd)
     {
@@ -59,7 +70,6 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
         PlayerPrefs.Save();
     }
-
 
     public int LoadLastScore()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     
     private Tween _flyTween;
     private Tween _swayTween;
@@ -19,7 +19,8 @@ public class Balloon : MonoBehaviour
     
     public void SetSkin(Sprite newSkin)
     {
-        spriteRenderer.sprite = newSkin;
+        Debug.Log("Skin set");
+        _spriteRenderer.sprite = newSkin;
     }
 
     public void FlyTo3D(Vector3 targetPos, float duration)
