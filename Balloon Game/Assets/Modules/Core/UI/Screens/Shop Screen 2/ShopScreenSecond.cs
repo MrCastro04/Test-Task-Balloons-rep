@@ -9,23 +9,12 @@ using UnityEngine;
 public class ShopScreenSecond : BaseScreen
 {
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private List<BuyButton> _buyButtons;
+    [SerializeField] private List<BalloonBlockButton> _buyButtons;
 
     public override IEnumerator Open()
     {
-        UpdateUI();
         UpdateReward();
         yield return base.Open();
-    }
-
-    private void OnEnable()
-    {
-        ActionSystem.SubscribeReaction<PlayerPurchaseBalloonGA>(OnPlayerPurchase, ReactionTiming.POST);
-    }
-
-    private void OnDisable()
-    {
-        ActionSystem.UnsubscribeReaction<PlayerPurchaseBalloonGA>(OnPlayerPurchase, ReactionTiming.POST);
     }
 
     private void UpdateReward()
@@ -36,23 +25,5 @@ public class ShopScreenSecond : BaseScreen
             _rewardText.text = $"{reward}";
         }
     }
-
-    private void UpdateUI()
-    {
-        foreach (var button in _buyButtons)
-        {
-            if (SaveSystem.Instance.IsSkinPurchased(button.BalloonIndex))
-            {
-                button.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    private void OnPlayerPurchase(PlayerPurchaseBalloonGA ga)
-    {
-        var button = _buyButtons.FirstOrDefault(b => b.BalloonIndex == ga.BalloonIndex);
-        if (button != null)
-            button.gameObject.SetActive(false);
-        UpdateReward();
-    }
+    
 }

@@ -18,15 +18,20 @@ public class CanvasSystem : Singleton<CanvasSystem>, ISystem
 
     public void OnEnable()
     {
+        ActionSystem.SubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+
         ActionSystem.AttachPerformer<OpenScreenGA>(OpenScreenPerformer);
         ActionSystem.AttachPerformer<CloseScreenGA>(CloseScreenPerformer);
     }
 
     public void OnDisable()
     {
+        ActionSystem.UnsubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+        
         ActionSystem.DetachPerformer<OpenScreenGA>();
         ActionSystem.DetachPerformer<CloseScreenGA>();
     }
+
 
     public IEnumerator Init(BaseScreen[] baseScreens)
     {
@@ -43,6 +48,11 @@ public class CanvasSystem : Singleton<CanvasSystem>, ISystem
 
         yield return FadeIn();
         yield return _currentScreen.Open();
+    }
+
+    private void OpenScreenReaction(OpenScreenGA openScreenGa)
+    {
+        StartCoroutine(OpenScreenPerformer(openScreenGa));
     }
 
     private IEnumerator OpenScreenPerformer(OpenScreenGA openScreenGa)
