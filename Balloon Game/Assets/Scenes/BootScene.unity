@@ -3813,10 +3813,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Tap the balloons that fly up from the bottom of the screen!
 
-
     Each
     popped balloon gives you score points.
-
 
     Collect enough points to win the
     level'
@@ -3846,13 +3844,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.3
-  m_fontSizeBase: 36.3
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -6305,7 +6303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4055402739197624396, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4534921581281123571, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: _tutorialScreen
