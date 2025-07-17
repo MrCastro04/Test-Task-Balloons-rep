@@ -1,11 +1,15 @@
 ﻿using System.Collections;
+using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Utility.Singleton;
+using UnityEngine;
 
 public class ShopSystem : Singleton<ShopSystem>
 {
+    [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
+    
     private const int BalloonCost = 1000;
-
+    
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<BuyBalloonGA>(BuyBalloonPerformer);
@@ -16,16 +20,18 @@ public class ShopSystem : Singleton<ShopSystem>
         ActionSystem.DetachPerformer<BuyBalloonGA>();
     }
 
-    private IEnumerator BuyBalloonPerformer(BuyBalloonGA ga)
+    private IEnumerator BuyBalloonPerformer(BuyBalloonGA buyBalloonGa)
     {
         int currentCoins = SaveSystem.Instance.LoadLastReward();
+        
         if (currentCoins < BalloonCost)
             yield break;
 
         SaveSystem.Instance.AddScoreAndReward(SaveSystem.Instance.LoadLastScore(), -BalloonCost);
-        SaveSystem.Instance.SavePurchasedSkin(ga.BalloonIndex);
+        SaveSystem.Instance.SavePurchasedSkin(buyBalloonGa.BalloonIndex);
 
-        ActionSystem.Instance.Perform(new PlayerPurchaseBalloonGA(ga.BalloonIndex, ga.BalloonSprite));
+        _balloonSkinSystem.SaveNewSkin(buyBalloonGa.BalloonSprite);
+        
         yield return null;
     }
 }

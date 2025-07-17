@@ -49,3 +49,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3589d0b6724a4a54f82652e4838fa3cb, type: 3}
   - {fileID: 21300000, guid: 91b5e3a779a84dd429f2f8557915cd89, type: 3}
   - {fileID: 21300000, guid: 1df2adbbb02d5894ca234d1b78b2016a, type: 3}
+  _defaultSkin: {fileID: 21300000, guid: c66e1d40a4b1f3944b49f22348a024ea, type: 3}

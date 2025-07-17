@@ -32,7 +32,8 @@ public class GameplaySystem : Singleton<GameplaySystem>
     private int _balloonsLeft;
     private bool _isRunning;
     private Coroutine _levelRoutine;
-
+    private Sprite _balloonsSkin;
+    
     private void OnEnable()
     {
         ActionSystem.SubscribeReaction<StartLevelGA>(StartLevelReaction, ReactionTiming.POST);
@@ -47,11 +48,13 @@ public class GameplaySystem : Singleton<GameplaySystem>
     {
         if (_isRunning) return;
 
+        _balloonsSkin = BalloonSkinSystem.Instance.GetSelectedOrDefaultSkin();
+        
         _isRunning = true;
         _currentTime = _levelTimer;
         _currentScore = 0;
 
-        _balloonPool.PopulatePool(30);
+        _balloonPool.PopulatePool(30, _balloonsSkin);
         _balloonsLeft = 30;
 
         UpdateTimerUI();
@@ -90,7 +93,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
         );
 
         balloon.transform.position = spawnPos;
-        balloon.SetSkin(BalloonSkinSystem.Instance.SelectedSkin);
 
         Vector3 targetPos = new Vector3(spawnPos.x, _spawnAreaCenter.position.y + _spawnOffset, spawnPos.z);
 

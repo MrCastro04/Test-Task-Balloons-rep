@@ -9,14 +9,16 @@ public class BalloonPool : MonoBehaviour
     private Queue<Balloon> _balloonQueue = new();
     private List<Balloon> _activeBalloons = new(); 
 
-    public void PopulatePool(int count)
+    public void PopulatePool(int count, Sprite selectedSkin)
     {
         _balloonQueue.Clear();
         _activeBalloons.Clear();
 
         for (int i = 0; i < count; i++)
         {
-            var balloon = Instantiate(_balloonPrefab, _poolParent).GetComponent<Balloon>();
+            Balloon balloon = Instantiate(_balloonPrefab, _poolParent).GetComponent<Balloon>();
+            
+            balloon.SetSkin(selectedSkin);
             balloon.gameObject.SetActive(false);
             _balloonQueue.Enqueue(balloon);
         }

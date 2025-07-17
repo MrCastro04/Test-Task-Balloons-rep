@@ -5,9 +5,9 @@ using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Systems.Interfaces;
 using Modules.Core.UI.Screens.Base_Screen;
-using Modules.Core.Utility.Singleton;
+using Unity.VisualScripting;
 
-public class CanvasSystem : Singleton<CanvasSystem>, ISystem
+public class CanvasSystem : Modules.Core.Utility.Singleton.Singleton<CanvasSystem>, ISystem
 {
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private float _fadeSpeed = 0.5f;
@@ -18,15 +18,22 @@ public class CanvasSystem : Singleton<CanvasSystem>, ISystem
 
     public void OnEnable()
     {
+        /*ActionSystem.SubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+        ActionSystem.SubscribeReaction<CloseScreenGA>(CloseScreenReaction, ReactionTiming.POST);*/
+        
         ActionSystem.AttachPerformer<OpenScreenGA>(OpenScreenPerformer);
         ActionSystem.AttachPerformer<CloseScreenGA>(CloseScreenPerformer);
     }
 
     public void OnDisable()
     {
+        /*ActionSystem.UnsubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+        ActionSystem.UnsubscribeReaction<CloseScreenGA>(CloseScreenReaction, ReactionTiming.POST);*/
+        
         ActionSystem.DetachPerformer<OpenScreenGA>();
         ActionSystem.DetachPerformer<CloseScreenGA>();
     }
+
 
     public IEnumerator Init(BaseScreen[] baseScreens)
     {
@@ -43,6 +50,16 @@ public class CanvasSystem : Singleton<CanvasSystem>, ISystem
 
         yield return FadeIn();
         yield return _currentScreen.Open();
+    }
+
+    private void CloseScreenReaction(CloseScreenGA obj)
+    {
+        StartCoroutine(CloseScreenPerformer(obj));
+    }
+
+    private void OpenScreenReaction(OpenScreenGA openScreenGa)
+    {
+        StartCoroutine(OpenScreenPerformer(openScreenGa));
     }
 
     private IEnumerator OpenScreenPerformer(OpenScreenGA openScreenGa)

@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.UI.Screens.Base_Screen;
 using TMPro;
 using UnityEngine;
@@ -9,23 +7,35 @@ using UnityEngine;
 public class ShopScreenSecond : BaseScreen
 {
     [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private List<BuyButton> _buyButtons;
+    [SerializeField] private List<BalloonBlockButton> _buyButtons;
+    [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
 
     public override IEnumerator Open()
     {
-        UpdateUI();
         UpdateReward();
+        UpdateBuyTextPhoto();
+        UpdateSelectedSkin();
         yield return base.Open();
     }
 
-    private void OnEnable()
+    private void UpdateSelectedSkin()
     {
-        ActionSystem.SubscribeReaction<PlayerPurchaseBalloonGA>(OnPlayerPurchase, ReactionTiming.POST);
+        Sprite selectedSkin = _balloonSkinSystem.SelectedSkin;
+        foreach (var button in _buyButtons)
+        {
+            button.UpdateSelectedHighlight(selectedSkin);
+        }
     }
 
-    private void OnDisable()
+    private void UpdateBuyTextPhoto()
     {
-        ActionSystem.UnsubscribeReaction<PlayerPurchaseBalloonGA>(OnPlayerPurchase, ReactionTiming.POST);
+        foreach (var button in _buyButtons)
+        {
+            if (_balloonSkinSystem.PlayerBalloonSkins.Contains(button.SkinOnThisButton))
+            {
+                button.RemoveBuyTextPhoto();
+            }
+        }
     }
 
     private void UpdateReward()
@@ -35,24 +45,5 @@ public class ShopScreenSecond : BaseScreen
             int reward = SaveSystem.Instance.LoadLastReward();
             _rewardText.text = $"{reward}";
         }
-    }
-
-    private void UpdateUI()
-    {
-        foreach (var button in _buyButtons)
-        {
-            if (SaveSystem.Instance.IsSkinPurchased(button.BalloonIndex))
-            {
-                button.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    private void OnPlayerPurchase(PlayerPurchaseBalloonGA ga)
-    {
-        var button = _buyButtons.FirstOrDefault(b => b.BalloonIndex == ga.BalloonIndex);
-        if (button != null)
-            button.gameObject.SetActive(false);
-        UpdateReward();
     }
 }
