@@ -5,7 +5,7 @@
 
     public class SelectScreen : BaseScreen
     {
-        [SerializeField] private BalloonBlockButton _balloonBlockButton;
+        [SerializeField] private SelectBalloonButton _balloonBlockButton;
 
         private int _cashedId;
         private Sprite _cashedSkinOnThisButton;
@@ -13,8 +13,7 @@
         public override IEnumerator Open()
         {
            _balloonBlockButton.SkinId = _cashedId;
-
-           _balloonBlockButton.SkinOnThisButton = _cashedSkinOnThisButton;
+           _balloonBlockButton.SkinSprite = _cashedSkinOnThisButton;
 
            yield return null;
         }
@@ -25,5 +24,4 @@
 
             _cashedSkinOnThisButton = balloonBlockSkin;
         }
-        
     }

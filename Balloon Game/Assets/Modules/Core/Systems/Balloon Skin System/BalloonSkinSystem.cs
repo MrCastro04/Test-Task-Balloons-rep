@@ -65,6 +65,8 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
         {
             yield return null;
             
+            _selectScreen.Load(playerTapBalloonBlockGa.ID, playerTapBalloonBlockGa.BalloonBlockSkin);
+            
             ActionSystem.Instance.AddReaction(new OpenScreenGA(playerTapBalloonBlockGa.SelectScreen));
         }
         else
