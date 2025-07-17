@@ -33,7 +33,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
     private bool _isRunning;
     private Coroutine _levelRoutine;
     private Sprite _balloonsSkin;
-    
+
     private void OnEnable()
     {
         ActionSystem.SubscribeReaction<StartLevelGA>(StartLevelReaction, ReactionTiming.POST);
@@ -42,14 +42,22 @@ public class GameplaySystem : Singleton<GameplaySystem>
     private void OnDisable()
     {
         ActionSystem.UnsubscribeReaction<StartLevelGA>(StartLevelReaction, ReactionTiming.POST);
+
+        if (_levelRoutine != null)
+        {
+            StopCoroutine(_levelRoutine);
+            _levelRoutine = null;
+        }
+
+        _isRunning = false;
     }
 
     private void StartLevelReaction(StartLevelGA ga)
     {
-        if (_isRunning) return;
+        if (_isRunning || !this || !gameObject || !enabled) return;
 
         _balloonsSkin = BalloonSkinSystem.Instance.GetSelectedOrDefaultSkin();
-        
+
         _isRunning = true;
         _currentTime = _levelTimer;
         _currentScore = 0;
@@ -60,12 +68,15 @@ public class GameplaySystem : Singleton<GameplaySystem>
         UpdateTimerUI();
         UpdateScoreUI();
 
+        if (_levelRoutine != null)
+            StopCoroutine(_levelRoutine);
+
         _levelRoutine = StartCoroutine(LevelTimerRoutine());
     }
 
     private IEnumerator LevelTimerRoutine()
     {
-        while (_currentTime > 0)
+        while (_currentTime > 0 && _isRunning)
         {
             SpawnBalloon();
             yield return new WaitForSeconds(1f);
@@ -79,6 +90,8 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
     private void SpawnBalloon()
     {
+        if (!_isRunning) return;
+
         var balloon = _balloonPool.GetBalloon();
         if (balloon == null) return;
 
@@ -97,21 +110,21 @@ public class GameplaySystem : Singleton<GameplaySystem>
         Vector3 targetPos = new Vector3(spawnPos.x, _spawnAreaCenter.position.y + _spawnOffset, spawnPos.z);
 
         balloon.OnPopped += OnBalloonPopped;
-        balloon.FlyTo3D(targetPos, _flyDuration); 
+        balloon.FlyTo3D(targetPos, _flyDuration);
     }
 
     private void OnBalloonPopped(Balloon balloon)
     {
+        if (!_isRunning) return;
+
         balloon.OnPopped -= OnBalloonPopped;
         _currentScore++;
         UpdateScoreUI();
 
-        if (_currentScore >= _targetScore && _isRunning)
-        {
+        if (_currentScore >= _targetScore)
             EndLevel();
-        }
     }
-    
+
     private void EndLevel()
     {
         if (!_isRunning) return;
@@ -126,11 +139,10 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         _balloonPool.ClearAll();
 
-        int reward = _currentScore * 10; 
-        
+        int reward = _currentScore * 10;
         SaveSystem.Instance.AddScoreAndReward(_currentScore, reward);
 
-        if (_currentScore == _targetScore)
+        if (_currentScore >= _targetScore)
         {
             _winScreen.SetScore(_currentScore);
             _winScreen.SetReward(reward);
