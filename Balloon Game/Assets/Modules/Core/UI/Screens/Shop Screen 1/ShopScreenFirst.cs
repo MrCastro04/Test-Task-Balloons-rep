@@ -14,7 +14,17 @@ public class ShopScreenFirst : BaseScreen
     {
         UpdateReward();
         UpdateBuyTextPhoto();
+        UpdateSelectedSkin();
         yield return base.Open();
+    }
+    
+    private void UpdateSelectedSkin()
+    {
+        Sprite selectedSkin = _balloonSkinSystem.SelectedSkin;
+        foreach (var button in _buyButtons)
+        {
+            button.UpdateSelectedHighlight(selectedSkin);
+        }
     }
 
     private void UpdateBuyTextPhoto()

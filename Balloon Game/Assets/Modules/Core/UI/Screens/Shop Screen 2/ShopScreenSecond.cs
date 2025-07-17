@@ -14,15 +14,16 @@ public class ShopScreenSecond : BaseScreen
     {
         UpdateReward();
         UpdateBuyTextPhoto();
+        UpdateSelectedSkin();
         yield return base.Open();
     }
 
-    private void UpdateReward()
+    private void UpdateSelectedSkin()
     {
-        if (_rewardText != null)
+        Sprite selectedSkin = _balloonSkinSystem.SelectedSkin;
+        foreach (var button in _buyButtons)
         {
-            int reward = SaveSystem.Instance.LoadLastReward();
-            _rewardText.text = $"{reward}";
+            button.UpdateSelectedHighlight(selectedSkin);
         }
     }
 
@@ -34,6 +35,15 @@ public class ShopScreenSecond : BaseScreen
             {
                 button.RemoveBuyTextPhoto();
             }
+        }
+    }
+
+    private void UpdateReward()
+    {
+        if (_rewardText != null)
+        {
+            int reward = SaveSystem.Instance.LoadLastReward();
+            _rewardText.text = $"{reward}";
         }
     }
 }

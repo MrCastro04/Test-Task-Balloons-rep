@@ -34,6 +34,8 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
         LoadSelectedSkin();
     }
 
+    public void SetSelectedSkin(Sprite skin) => _selectedSkin = skin;
+
     private void LoadPurchasedSkins()
     {
         _playerBalloonSkins.Clear();
