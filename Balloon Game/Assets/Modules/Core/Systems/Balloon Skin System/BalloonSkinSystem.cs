@@ -11,13 +11,13 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
     [SerializeField] private Sprite _defaultSkin;
     [SerializeField] private BuyScreen _buyScreen;
     [SerializeField] private SelectScreen _selectScreen;
-    
+
     private List<Sprite> _playerBalloonSkins = new();
     private Sprite _selectedSkin;
-    
+
     public List<Sprite> PlayerBalloonSkins => _playerBalloonSkins;
     public Sprite SelectedSkin => _selectedSkin;
-    
+
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<PlayerTapBalloonBlockGA>(PlayerTapBalloonBlockPerformer);
@@ -28,11 +28,29 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
         ActionSystem.DetachPerformer<PlayerTapBalloonBlockGA>();
     }
 
+    private void Start()
+    {
+        LoadPurchasedSkins();
+        LoadSelectedSkin();
+    }
+
+    private void LoadPurchasedSkins()
+    {
+        _playerBalloonSkins.Clear();
+
+        for (int i = 0; i < allBalloonSkins.Count; i++)
+        {
+            if (SaveSystem.Instance.IsSkinPurchased(i))
+            {
+                _playerBalloonSkins.Add(allBalloonSkins[i]);
+                Debug.Log($"[BalloonSkinSystem] Загружен купленный скин: {allBalloonSkins[i].name}");
+            }
+        }
+    }
+
     public Sprite GetSelectedOrDefaultSkin()
     {
-        if (_selectedSkin == null)
-            return _defaultSkin;
-        return _selectedSkin;
+        return _selectedSkin == null ? _defaultSkin : _selectedSkin;
     }
 
     private void LoadSelectedSkin()
@@ -44,13 +62,15 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
             _selectedSkin = _defaultSkin;
     }
 
-    public void SaveNewSkin (Sprite newSkin)
+    public void SaveNewSkin(Sprite newSkin)
     {
-        _playerBalloonSkins.Add(newSkin);
+        if (!_playerBalloonSkins.Contains(newSkin))
+            _playerBalloonSkins.Add(newSkin);
+
         _selectedSkin = newSkin;
 
         int skinIndex = allBalloonSkins.IndexOf(newSkin);
-        
+        SaveSystem.Instance.SavePurchasedSkin(skinIndex);
         SaveSystem.Instance.SaveSelectedSkinIndex(skinIndex);
     }
 
@@ -58,23 +78,19 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
     {
         if (playerTapBalloonBlockGa.ID < 0 || playerTapBalloonBlockGa.ID >= allBalloonSkins.Count)
             yield break;
-        
+
         Sprite tappedSkin = allBalloonSkins[playerTapBalloonBlockGa.ID];
-        
+
         if (_playerBalloonSkins.Contains(tappedSkin))
         {
-            yield return null;
-            
             _selectScreen.Load(playerTapBalloonBlockGa.ID, playerTapBalloonBlockGa.BalloonBlockSkin);
-            
+            yield return null;
             ActionSystem.Instance.AddReaction(new OpenScreenGA(playerTapBalloonBlockGa.SelectScreen));
         }
         else
         {
-            yield return null;
-
             _buyScreen.Load(playerTapBalloonBlockGa.ID, playerTapBalloonBlockGa.BalloonBlockSkin);
-            
+            yield return null;
             ActionSystem.Instance.AddReaction(new OpenScreenGA(playerTapBalloonBlockGa.BuyScreen));
         }
     }

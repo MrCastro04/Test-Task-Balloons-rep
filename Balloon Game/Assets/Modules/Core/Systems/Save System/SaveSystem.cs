@@ -35,7 +35,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             PlayerPrefs.Save();
         }
     }
-    
+
     public void SavePurchasedSkin(int index)
     {
         string key = $"PurchasedSkin_{index}";
@@ -49,9 +49,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         return PlayerPrefs.HasKey(key) && PlayerPrefs.GetInt(key) == 1;
     }
 
-    public void SaveSelectedSkinIndex(int skinIndex)
+    public void SaveSelectedSkinIndex(int index)
     {
-        PlayerPrefs.SetInt(SelectedSkinIndexKey, skinIndex);
+        PlayerPrefs.SetInt(SelectedSkinIndexKey, index);
         PlayerPrefs.Save();
     }
 
