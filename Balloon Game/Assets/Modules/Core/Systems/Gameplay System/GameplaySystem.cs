@@ -47,7 +47,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
     {
         if (_isRunning) return;
 
-        Debug.Log("Level started!");
         _isRunning = true;
         _currentTime = _levelTimer;
         _currentScore = 0;
@@ -84,7 +83,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         balloon.transform.SetParent(null);
 
-       
         Vector3 spawnPos = _spawnAreaCenter.position + new Vector3(
             Random.Range(-_spawnAreaSize.x / 2f, _spawnAreaSize.x / 2f),
             -_spawnOffset,
@@ -92,11 +90,11 @@ public class GameplaySystem : Singleton<GameplaySystem>
         );
 
         balloon.transform.position = spawnPos;
-        
+        balloon.SetSkin(BalloonSkinSystem.Instance.SelectedSkin);
+
         Vector3 targetPos = new Vector3(spawnPos.x, _spawnAreaCenter.position.y + _spawnOffset, spawnPos.z);
 
         balloon.OnPopped += OnBalloonPopped;
-        
         balloon.FlyTo3D(targetPos, _flyDuration); 
     }
 
@@ -117,7 +115,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
         if (!_isRunning) return;
 
         _isRunning = false;
-        Debug.Log($"Level Finished! Final Score: {_currentScore}/{_targetScore}");
 
         if (_levelRoutine != null)
         {
@@ -127,26 +124,24 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         _balloonPool.ClearAll();
 
+        int reward = _currentScore * 10; 
+        
+        SaveSystem.Instance.AddScoreAndReward(_currentScore, reward);
+
         if (_currentScore == _targetScore)
         {
             _winScreen.SetScore(_currentScore);
-            _winScreen.SetReward(_currentScore * 10);
-            
+            _winScreen.SetReward(reward);
             ActionSystem.Instance.Perform(new OpenScreenGA(_winScreen));
-            
-            Debug.Log("You WIN!");
         }
         else
         {
             _loseScreen.SetScore(_currentScore);
-            _loseScreen.SetReward(_currentScore * 10);
-            
+            _loseScreen.SetReward(reward);
             ActionSystem.Instance.Perform(new OpenScreenGA(_loseScreen));
-            
-            Debug.Log("You LOSE!");
         }
     }
-    
+
     private void UpdateTimerUI()
     {
         if (_timerText != null)

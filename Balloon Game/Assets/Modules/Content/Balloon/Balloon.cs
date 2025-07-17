@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    
     private Tween _flyTween;
     private Tween _swayTween;
     private bool _isPopped;
@@ -13,6 +15,11 @@ public class Balloon : MonoBehaviour
     private void OnMouseDown()
     {
         Pop();
+    }
+    
+    public void SetSkin(Sprite newSkin)
+    {
+        spriteRenderer.sprite = newSkin;
     }
 
     public void FlyTo3D(Vector3 targetPos, float duration)
