@@ -117,7 +117,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
         if (!_isRunning) return;
 
         _isRunning = false;
-        Debug.Log($"Level Finished! Final Score: {_currentScore}/{_targetScore}");
 
         if (_levelRoutine != null)
         {
@@ -127,25 +126,24 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         _balloonPool.ClearAll();
 
+        int reward = _currentScore * 10; 
+        
+        SaveSystem.Instance.SaveScoreAndReward(_currentScore, reward);
+
         if (_currentScore == _targetScore)
         {
             _winScreen.SetScore(_currentScore);
-            _winScreen.SetReward(_currentScore * 10);
-            
+            _winScreen.SetReward(reward);
             ActionSystem.Instance.Perform(new OpenScreenGA(_winScreen));
-            
-            Debug.Log("You WIN!");
         }
         else
         {
             _loseScreen.SetScore(_currentScore);
-            _loseScreen.SetReward(_currentScore * 10);
-            
+            _loseScreen.SetReward(reward);
             ActionSystem.Instance.Perform(new OpenScreenGA(_loseScreen));
-            
-            Debug.Log("You LOSE!");
         }
     }
+
     
     private void UpdateTimerUI()
     {
