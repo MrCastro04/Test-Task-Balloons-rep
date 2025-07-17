@@ -12,6 +12,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     private const string LastScoreKey = "LastScore";
     private const string LastRewardKey = "LastReward";
     private const string SelectedSkinIndexKey = "SelectedSkinIndex";
+    private const string PlayerAvatarPathKey = "PlayerAvatarPath";
     private const int DefaultReward = 1000;
 
     public void OnEnable()
@@ -34,6 +35,17 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             PlayerPrefs.SetInt(LastRewardKey, DefaultReward);
             PlayerPrefs.Save();
         }
+    }
+    
+    public void SavePlayerAvatarPath(string avatarPath)
+    {
+        PlayerPrefs.SetString(PlayerAvatarPathKey, avatarPath);
+        PlayerPrefs.Save();
+    }
+
+    public string LoadPlayerAvatarPath()
+    {
+        return PlayerPrefs.HasKey(PlayerAvatarPathKey) ? PlayerPrefs.GetString(PlayerAvatarPathKey) : string.Empty;
     }
 
     public void SavePurchasedSkin(int index)

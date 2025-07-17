@@ -777,6 +777,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clickSound: {fileID: 8300000, guid: b3c76f9e6c3dd304db29c00a49028483, type: 3}
   _nextTargetScreen: {fileID: 1243989860}
+--- !u!1 &173197205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9079524780967229177, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+  m_PrefabInstance: {fileID: 5033676480449048868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &173197209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173197205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d42df23214ef4bb095550fb8c5320a08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clickSound: {fileID: 8300000, guid: b3c76f9e6c3dd304db29c00a49028483, type: 3}
+  _myProfileScreen: {fileID: 606982962}
 --- !u!1 &181347700
 GameObject:
   m_ObjectHideFlags: 0
@@ -6256,7 +6275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4055402739197624396, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4534921581281123571, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: _tutorialScreen
@@ -6334,6 +6353,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6852343396279666316, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: _availableAvatars.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852343396279666316, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: _availableAvatars.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f7a5e3995c453b14c9e4986f021a96f9, type: 3}
+    - target: {fileID: 6852343396279666316, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: _availableAvatars.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b3bd3cc7e8e9ec24c9206fed3048ab83, type: 3}
+    - target: {fileID: 6852343396279666316, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: _availableAvatars.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: f7a9b4b04226fe243a96c79e6d381bac, type: 3}
     - target: {fileID: 7739038403972556673, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6345,6 +6380,10 @@ PrefabInstance:
     - target: {fileID: 8519313719396335373, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_Padding.m_Top
       value: 299
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079524780967229177, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      propertyPath: m_Name
+      value: Player Avatar Button
       objectReference: {fileID: 0}
     - target: {fileID: 9191375426398656592, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6391,6 +6430,9 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 1914010766}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9079524780967229177, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 173197209}
     - targetCorrespondingSourceObject: {fileID: 898616460772307839, guid: 5555ad891be757b4bb777337858f37dd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 398278297}
