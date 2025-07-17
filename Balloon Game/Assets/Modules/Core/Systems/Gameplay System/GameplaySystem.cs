@@ -47,7 +47,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
     {
         if (_isRunning) return;
 
-        Debug.Log("Level started!");
         _isRunning = true;
         _currentTime = _levelTimer;
         _currentScore = 0;
@@ -84,7 +83,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         balloon.transform.SetParent(null);
 
-       
         Vector3 spawnPos = _spawnAreaCenter.position + new Vector3(
             Random.Range(-_spawnAreaSize.x / 2f, _spawnAreaSize.x / 2f),
             -_spawnOffset,
@@ -92,11 +90,11 @@ public class GameplaySystem : Singleton<GameplaySystem>
         );
 
         balloon.transform.position = spawnPos;
-        
+        balloon.SetSkin(BalloonSkinSystem.Instance.SelectedSkin);
+
         Vector3 targetPos = new Vector3(spawnPos.x, _spawnAreaCenter.position.y + _spawnOffset, spawnPos.z);
 
         balloon.OnPopped += OnBalloonPopped;
-        
         balloon.FlyTo3D(targetPos, _flyDuration); 
     }
 
@@ -144,7 +142,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
         }
     }
 
-    
     private void UpdateTimerUI()
     {
         if (_timerText != null)
