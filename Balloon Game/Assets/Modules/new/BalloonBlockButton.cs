@@ -4,13 +4,13 @@
 
     public class BalloonBlockButton : BaseButton
     {
-        [SerializeField] private int _skinId;
-        [SerializeField] private Sprite _skinOnThisButton;
+        [SerializeField] public int SkinId;
+        [SerializeField] public Sprite SkinOnThisButton;
         [SerializeField] private BuyScreen _buyScreen;
         [SerializeField] private SelectScreen _selectScreen;
-        
+
         protected override void OnClickAction()
         {
-            ActionSystem.Instance.Perform(new PlayerTapBalloonBlockGA(_skinId,_skinOnThisButton,_buyScreen,_selectScreen));
+            ActionSystem.Instance.Perform(new PlayerTapBalloonBlockGA(SkinId,SkinOnThisButton,_buyScreen,_selectScreen));
         }
     }

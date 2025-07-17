@@ -9,6 +9,8 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
 {
     [SerializeField] private List<Sprite> allBalloonSkins;
     [SerializeField] private Sprite _defaultSkin;
+    [SerializeField] private BuyScreen _buyScreen;
+    [SerializeField] private SelectScreen _selectScreen;
     
     private List<Sprite> _playerBalloonSkins = new();
     private Sprite _selectedSkin;
@@ -60,7 +62,6 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
 
     private IEnumerator PlayerTapBalloonBlockPerformer(PlayerTapBalloonBlockGA playerTapBalloonBlockGa)
     {
-        Debug.Log("dsfsfdsfds");
         if (playerTapBalloonBlockGa.ID < 0 || playerTapBalloonBlockGa.ID >= allBalloonSkins.Count)
             yield break;
         
@@ -74,9 +75,10 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
         }
         else
         {
-            Debug.Log("456");
             yield return null;
 
+            _buyScreen.Load(playerTapBalloonBlockGa.ID, playerTapBalloonBlockGa.BalloonBlockSkin);
+            
             ActionSystem.Instance.AddReaction(new OpenScreenGA(playerTapBalloonBlockGa.BuyScreen));
         }
     }
