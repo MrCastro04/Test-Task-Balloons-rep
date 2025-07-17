@@ -5,8 +5,9 @@ using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Systems.Interfaces;
 using Modules.Core.UI.Screens.Base_Screen;
+using Modules.Core.Utility.Singleton;
 
-public class CanvasSystem : MonoBehaviour, ISystem
+public class CanvasSystem : Singleton<CanvasSystem>, ISystem
 {
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private float _fadeSpeed = 0.5f;
