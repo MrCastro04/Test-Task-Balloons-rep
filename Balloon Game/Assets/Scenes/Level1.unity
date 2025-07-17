@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe13340a541df14db4a612f21fa2f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 889017959}
 --- !u!1 &219619997
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +416,7 @@ GameObject:
   - component: {fileID: 326776458}
   - component: {fileID: 326776457}
   m_Layer: 5
-  m_Name: Red rect (Image)  (1)
+  m_Name: reward rect (Image)  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +554,7 @@ GameObject:
   - component: {fileID: 439398062}
   - component: {fileID: 439398061}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: reward text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -937,7 +938,7 @@ GameObject:
   - component: {fileID: 724038570}
   - component: {fileID: 724038569}
   m_Layer: 5
-  m_Name: 'Red rect (Image) '
+  m_Name: 'score rect (Image) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1565,10 +1566,10 @@ MonoBehaviour:
   _winScreen: {fileID: 1662677134}
   _loseScreen: {fileID: 208472620}
   _balloonPool: {fileID: 1122268389}
-  _levelTimer: 5
+  _levelTimer: 30
   _flyDuration: 10
   _spawnOffset: 50
-  _targetScore: 30
+  _targetScore: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
   _timerText: {fileID: 863072297}
@@ -1665,7 +1666,7 @@ GameObject:
   - component: {fileID: 889017960}
   - component: {fileID: 889017959}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: score Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2147,7 +2148,7 @@ GameObject:
   - component: {fileID: 1145524170}
   - component: {fileID: 1145524169}
   m_Layer: 5
-  m_Name: Red rect (Image)  (1)
+  m_Name: reward rect (Image)  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2801,6 +2802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6803d2badf704120a4885445b62bdd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 1333058242}
 --- !u!1 &1711202696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,7 +2970,7 @@ GameObject:
   - component: {fileID: 1897646941}
   - component: {fileID: 1897646940}
   m_Layer: 5
-  m_Name: 'Red rect (Image) '
+  m_Name: 'score rect (Image) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
