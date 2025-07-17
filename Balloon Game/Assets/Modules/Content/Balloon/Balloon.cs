@@ -19,25 +19,24 @@ public class Balloon : MonoBehaviour
     {
         _isPopped = false;
         KillTweens();
-        
+
         Vector3 startPos = transform.position;
         startPos.x += UnityEngine.Random.Range(-2f, 2f);
         startPos.z += UnityEngine.Random.Range(-2f, 2f);
         transform.position = startPos;
-        
+
         _swayTween = transform
             .DOMoveX(startPos.x + UnityEngine.Random.Range(-0.5f, 0.5f), 1.5f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
-        
+
         _flyTween = transform
             .DOMoveY(targetPos.y, duration)
             .SetEase(Ease.InCubic)
             .OnComplete(() =>
             {
-                KillTweens();
-                Destroy(gameObject);
-            }); 
+                ReturnToPool();
+            });
     }
 
     public void Pop()
@@ -45,21 +44,24 @@ public class Balloon : MonoBehaviour
         if (_isPopped) return;
         _isPopped = true;
 
-        Debug.Log($"Balloon popped: {gameObject.name}");
-        DestroyBalloon();
+        OnPopped?.Invoke(this);
+        ReturnToPool();
     }
 
-    private void DestroyBalloon()
+    private void ReturnToPool()
     {
         KillTweens();
-        OnPopped?.Invoke(this);
         gameObject.SetActive(false);
-        Destroy(gameObject, 0.05f);
     }
 
     private void KillTweens()
     {
         _flyTween?.Kill();
         _swayTween?.Kill();
+    }
+
+    private void OnDisable()
+    {
+        KillTweens();
     }
 }

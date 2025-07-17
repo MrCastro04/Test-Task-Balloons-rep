@@ -309,6 +309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe13340a541df14db4a612f21fa2f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 889017959}
+  _rewardText: {fileID: 439398061}
 --- !u!1 &219619997
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +417,7 @@ GameObject:
   - component: {fileID: 326776458}
   - component: {fileID: 326776457}
   m_Layer: 5
-  m_Name: Red rect (Image)  (1)
+  m_Name: reward rect (Image)  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +555,7 @@ GameObject:
   - component: {fileID: 439398062}
   - component: {fileID: 439398061}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: reward text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,50 +844,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5302500631587556890, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
   m_PrefabInstance: {fileID: 497238763}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &543402301
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 543402302}
-  - component: {fileID: 543402303}
-  m_Layer: 0
-  m_Name: Loader Scene System
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &543402302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543402301}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1424845811}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &543402303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543402301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f316b51090488ebeb59dde2ceff24a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &587038352
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,7 +939,7 @@ GameObject:
   - component: {fileID: 724038570}
   - component: {fileID: 724038569}
   m_Layer: 5
-  m_Name: 'Red rect (Image) '
+  m_Name: 'score rect (Image) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1609,10 +1567,10 @@ MonoBehaviour:
   _winScreen: {fileID: 1662677134}
   _loseScreen: {fileID: 208472620}
   _balloonPool: {fileID: 1122268389}
-  _levelTimer: 5
+  _levelTimer: 10
   _flyDuration: 10
-  _spawnOffset: 50
-  _targetScore: 30
+  _spawnOffset: 10
+  _targetScore: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
   _timerText: {fileID: 863072297}
@@ -1709,7 +1667,7 @@ GameObject:
   - component: {fileID: 889017960}
   - component: {fileID: 889017959}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: score Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2191,7 +2149,7 @@ GameObject:
   - component: {fileID: 1145524170}
   - component: {fileID: 1145524169}
   m_Layer: 5
-  m_Name: Red rect (Image)  (1)
+  m_Name: reward rect (Image)  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2601,9 +2559,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4961767143161506030, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 875883950}
-    - targetCorrespondingSourceObject: {fileID: 4961767143161506030, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 543402302}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
 --- !u!4 &1424845811 stripped
@@ -2848,6 +2803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6803d2badf704120a4885445b62bdd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 1333058242}
+  _rewardText: {fileID: 112295549}
 --- !u!1 &1711202696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,7 +2972,7 @@ GameObject:
   - component: {fileID: 1897646941}
   - component: {fileID: 1897646940}
   m_Layer: 5
-  m_Name: 'Red rect (Image) '
+  m_Name: 'score rect (Image) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3061,7 +3018,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 83cb48f1de04e90439cb5332ac84bf67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b72d4d855a57fa479c73d08bb1664ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
