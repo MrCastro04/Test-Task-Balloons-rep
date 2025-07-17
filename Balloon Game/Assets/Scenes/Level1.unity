@@ -1569,7 +1569,7 @@ MonoBehaviour:
   _balloonPool: {fileID: 1122268389}
   _levelTimer: 10
   _flyDuration: 10
-  _spawnOffset: 10
+  _spawnOffset: 0
   _targetScore: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
