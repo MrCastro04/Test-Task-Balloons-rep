@@ -130,6 +130,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
         if (_currentScore == _targetScore)
         {
             _winScreen.SetScore(_currentScore);
+            _winScreen.SetReward(_currentScore * 10);
             
             ActionSystem.Instance.Perform(new OpenScreenGA(_winScreen));
             
@@ -138,6 +139,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
         else
         {
             _loseScreen.SetScore(_currentScore);
+            _loseScreen.SetReward(_currentScore * 10);
             
             ActionSystem.Instance.Perform(new OpenScreenGA(_loseScreen));
             
