@@ -458,6 +458,7 @@ PrefabInstance:
     - {fileID: 2584139403044373431, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1488780984681116722, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
+    - {fileID: 3201251868186956459, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6616444818047782468, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
@@ -2569,6 +2570,7 @@ PrefabInstance:
     - {fileID: 2584139403044373431, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1488780984681116722, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
+    - {fileID: 3201251868186956459, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6616444818047782468, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
@@ -3367,7 +3369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1240153338
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6495,7 +6497,7 @@ PrefabInstance:
     - target: {fileID: 2584139403044373431, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
       propertyPath: SkinOnThisButton
       value: 
-      objectReference: {fileID: 21300000, guid: c66e1d40a4b1f3944b49f22348a024ea, type: 3}
+      objectReference: {fileID: 21300000, guid: 564d5df5548d2174e9bb203494b12691, type: 3}
     - target: {fileID: 2584139403044373431, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
       propertyPath: _skinOnThisButton
       value: 
@@ -6504,6 +6506,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BALLOON BLOCK
       objectReference: {fileID: 0}
+    - target: {fileID: 8578902845680523892, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 564d5df5548d2174e9bb203494b12691, type: 3}
     m_RemovedComponents:
     - {fileID: 2893044660362418564, guid: 8cb01bcd4d4e83744ba8826fbcf9f3d6, type: 3}
     m_RemovedGameObjects: []
