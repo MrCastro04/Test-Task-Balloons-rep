@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ShopSystem : Singleton<ShopSystem>
 {
-    [SerializeField] private BuyScreen _buyScreen;
+    [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
     
     private const int BalloonCost = 1000;
     
@@ -20,7 +20,7 @@ public class ShopSystem : Singleton<ShopSystem>
         ActionSystem.DetachPerformer<BuyBalloonGA>();
     }
 
-    private IEnumerator BuyBalloonPerformer(BuyBalloonGA ga)
+    private IEnumerator BuyBalloonPerformer(BuyBalloonGA buyBalloonGa)
     {
         int currentCoins = SaveSystem.Instance.LoadLastReward();
         
@@ -28,7 +28,10 @@ public class ShopSystem : Singleton<ShopSystem>
             yield break;
 
         SaveSystem.Instance.AddScoreAndReward(SaveSystem.Instance.LoadLastScore(), -BalloonCost);
-        SaveSystem.Instance.SavePurchasedSkin(ga.BalloonIndex);
+        SaveSystem.Instance.SavePurchasedSkin(buyBalloonGa.BalloonIndex);
+
+        _balloonSkinSystem.SaveNewSkin(buyBalloonGa.BalloonSprite);
+        
         yield return null;
     }
 }

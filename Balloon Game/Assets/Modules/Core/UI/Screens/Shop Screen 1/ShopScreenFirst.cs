@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.UI.Screens.Base_Screen;
 using TMPro;
 using UnityEngine;
@@ -10,11 +8,24 @@ public class ShopScreenFirst : BaseScreen
 {
     [SerializeField] private TMP_Text _rewardText;
     [SerializeField] private List<BalloonBlockButton> _buyButtons;
-
+    [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
+    
     public override IEnumerator Open()
     {
         UpdateReward();
+        UpdateBuyTextPhoto();
         yield return base.Open();
+    }
+
+    private void UpdateBuyTextPhoto()
+    {
+        foreach (var button in _buyButtons)
+        {
+            if (_balloonSkinSystem.PlayerBalloonSkins.Contains(button.SkinOnThisButton))
+            {
+                button.RemoveBuyTextPhoto();
+            }
+        }
     }
 
     private void UpdateReward()

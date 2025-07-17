@@ -44,15 +44,13 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
             _selectedSkin = _defaultSkin;
     }
 
-    private void PlayerPurchaseBalloonReaction(PlayerPurchaseBalloonGA ga)
+    public void SaveNewSkin (Sprite newSkin)
     {
-        if (!allBalloonSkins.Contains(ga.BalloonSprite))
-            return;
+        _playerBalloonSkins.Add(newSkin);
+        _selectedSkin = newSkin;
 
-        _playerBalloonSkins.Add(ga.BalloonSprite);
-        _selectedSkin = ga.BalloonSprite;
-
-        int skinIndex = allBalloonSkins.IndexOf(ga.BalloonSprite);
+        int skinIndex = allBalloonSkins.IndexOf(newSkin);
+        
         SaveSystem.Instance.SaveSelectedSkinIndex(skinIndex);
     }
 
