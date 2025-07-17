@@ -1,11 +1,15 @@
 ﻿using System.Collections;
+using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Utility.Singleton;
+using UnityEngine;
 
 public class ShopSystem : Singleton<ShopSystem>
 {
+    [SerializeField] private BuyScreen _buyScreen;
+    
     private const int BalloonCost = 1000;
-
+    
     private void OnEnable()
     {
         ActionSystem.AttachPerformer<BuyBalloonGA>(BuyBalloonPerformer);
@@ -25,8 +29,6 @@ public class ShopSystem : Singleton<ShopSystem>
 
         SaveSystem.Instance.AddScoreAndReward(SaveSystem.Instance.LoadLastScore(), -BalloonCost);
         SaveSystem.Instance.SavePurchasedSkin(ga.BalloonIndex);
-
-        ActionSystem.Instance.AddReaction(new PlayerPurchaseBalloonGA(ga.BalloonIndex, ga.BalloonSprite));
         yield return null;
     }
 }

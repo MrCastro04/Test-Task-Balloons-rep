@@ -25,8 +25,5 @@ public class BuyBalloonBlock : BaseButton
         }
     }
 
-    protected override void OnClickAction()
-    {
-        ActionSystem.Instance.Perform(new BuyBalloonGA(_skinId, _skinSprite));
-    }
+    protected override void OnClickAction() { }
 }

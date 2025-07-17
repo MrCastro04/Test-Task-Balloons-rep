@@ -20,15 +20,11 @@ public class BalloonSkinSystem : Singleton<BalloonSkinSystem>
     
     private void OnEnable()
     {
-        ActionSystem.SubscribeReaction<PlayerPurchaseBalloonGA>(PlayerPurchaseBalloonReaction, ReactionTiming.POST);
-        
         ActionSystem.AttachPerformer<PlayerTapBalloonBlockGA>(PlayerTapBalloonBlockPerformer);
     }
 
     private void OnDisable()
     {
-        ActionSystem.UnsubscribeReaction<PlayerPurchaseBalloonGA>(PlayerPurchaseBalloonReaction, ReactionTiming.POST);
-        
         ActionSystem.DetachPerformer<PlayerTapBalloonBlockGA>();
     }
 

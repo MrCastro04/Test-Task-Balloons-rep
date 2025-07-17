@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class BuyButton : BaseButton
 {
-    [SerializeField] private int balloonIndex;
-    [SerializeField] private Sprite balloonSprite;
-
-    public int BalloonIndex => balloonIndex;
-    public Sprite BalloonSprite => balloonSprite;
+    [SerializeField] private BuyBalloonBlock _balloonBlock;
+    
+     private int _balloonIndex;
+     private Sprite _balloonSprite;
 
     protected override void OnClickAction()
     {
-        ActionSystem.Instance.Perform(new BuyBalloonGA(balloonIndex, balloonSprite));
+        _balloonIndex = _balloonBlock.SkinId;
+
+        _balloonSprite = _balloonBlock.SkinSprite;
+        
+        ActionSystem.Instance.Perform(new BuyBalloonGA(_balloonIndex, _balloonSprite));
     }
 }
