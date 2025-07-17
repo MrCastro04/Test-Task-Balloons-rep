@@ -11,11 +11,13 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     private const string MusicVolumeKey = "MusicVolume";
     private const string LastScoreKey = "LastScore";
     private const string LastRewardKey = "LastReward";
+    private const int DefaultReward = 1000;
 
     public void OnEnable()
     {
         ActionSystem.AttachPerformer<SavePlayerNameGA>(SavePlayerNamePerformer);
         ActionSystem.AttachPerformer<SaveSettingsGA>(SaveSettingsPerformer);
+        InitializeDefaultReward();
     }
 
     public void OnDisable()
@@ -24,13 +26,27 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         ActionSystem.DetachPerformer<SaveSettingsGA>();
     }
 
-    public void SaveScoreAndReward(int score, int reward)
+    private void InitializeDefaultReward()
+    {
+        if (!PlayerPrefs.HasKey(LastRewardKey))
+        {
+            PlayerPrefs.SetInt(LastRewardKey, DefaultReward);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void AddScoreAndReward(int score, int rewardToAdd)
     {
         PlayerPrefs.SetInt(LastScoreKey, score);
-        PlayerPrefs.SetInt(LastRewardKey, reward);
+
+        int currentReward = LoadLastReward();
+        int newReward = currentReward + rewardToAdd;
+        PlayerPrefs.SetInt(LastRewardKey, newReward);
+
         PlayerPrefs.Save();
     }
-    
+
+
     public int LoadLastScore()
     {
         return PlayerPrefs.HasKey(LastScoreKey) ? PlayerPrefs.GetInt(LastScoreKey) : 0;
@@ -38,7 +54,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
     public int LoadLastReward()
     {
-        return PlayerPrefs.HasKey(LastRewardKey) ? PlayerPrefs.GetInt(LastRewardKey) : 0;
+        return PlayerPrefs.HasKey(LastRewardKey) ? PlayerPrefs.GetInt(LastRewardKey) : DefaultReward;
     }
 
     public string LoadPlayerName()

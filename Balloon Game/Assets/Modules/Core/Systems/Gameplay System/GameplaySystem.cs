@@ -128,7 +128,7 @@ public class GameplaySystem : Singleton<GameplaySystem>
 
         int reward = _currentScore * 10; 
         
-        SaveSystem.Instance.SaveScoreAndReward(_currentScore, reward);
+        SaveSystem.Instance.AddScoreAndReward(_currentScore, reward);
 
         if (_currentScore == _targetScore)
         {
