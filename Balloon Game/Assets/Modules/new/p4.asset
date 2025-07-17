@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569e1247db6e41b3b58c2d2b04c80e1c, type: 3}
+  m_Name: p4
+  m_EditorClassIdentifier: 
+  <PlayerName>k__BackingField: 
+  <IsPlayer>k__BackingField: 1
+  <AvatarImage>k__BackingField: {fileID: 21300000, guid: ef92418bb0acf9f42ac24d6edf7dd6f5, type: 3}
+  <RewardPoints>k__BackingField: 0
