@@ -16,3 +16,4 @@ MonoBehaviour:
   <IsPlayer>k__BackingField: 0
   <AvatarImage>k__BackingField: {fileID: 21300000, guid: ef92418bb0acf9f42ac24d6edf7dd6f5, type: 3}
   <RewardPoints>k__BackingField: 3000
+  <TotalStars>k__BackingField: 3

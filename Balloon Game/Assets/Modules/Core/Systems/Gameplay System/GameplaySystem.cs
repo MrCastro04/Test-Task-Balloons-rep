@@ -9,13 +9,13 @@ using Random = UnityEngine.Random;
 
 public class GameplaySystem : Singleton<GameplaySystem>
 {
-    [Header("WIN/LOSE Settings")] [SerializeField]
-    private WinScreen _winScreen;
+    [Header("WIN/LOSE Settings")] 
+    [SerializeField] private WinScreen _winScreen;
 
     [SerializeField] private LoseScreen _loseScreen;
 
-    [Header("Level Settings")] [SerializeField]
-    private BalloonPool _balloonPool;
+    [Header("Level Settings")] 
+    [SerializeField] private BalloonPool _balloonPool;
 
     [SerializeField] private float _levelTimer = 30f;
     [SerializeField] private float _flyDuration = 3f;
@@ -23,12 +23,13 @@ public class GameplaySystem : Singleton<GameplaySystem>
     [SerializeField] private int _targetScore = 15;
     [SerializeField] private int _levelIndex = 1;
 
-    [Header("Spawn Area (3D)")] [SerializeField]
-    private Transform _spawnAreaCenter;
+    [Header("Spawn Area (3D)")]
+    [SerializeField] private Transform _spawnAreaCenter;
 
     [SerializeField] private Vector3 _spawnAreaSize = new Vector3(10f, 0f, 10f);
 
-    [Header("UI")] [SerializeField] private TMP_Text _timerText;
+    [Header("UI")] 
+    [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _scoreText;
 
     private float _currentTime;
@@ -65,10 +66,10 @@ public class GameplaySystem : Singleton<GameplaySystem>
     {
         if (this == null || _isRunning) return;
 
-        StartCoroutine(StartLevelCoroutine(startLevelGa));
+        StartCoroutine(StartLevelPerformer(startLevelGa));
     }
 
-    private IEnumerator StartLevelCoroutine(StartLevelGA startLevelGa)
+    private IEnumerator StartLevelPerformer(StartLevelGA startLevelGa)
     {
         _balloonsSkin = BalloonSkinSystem.Instance.GetSelectedOrDefaultSkin();
         _isRunning = true;
