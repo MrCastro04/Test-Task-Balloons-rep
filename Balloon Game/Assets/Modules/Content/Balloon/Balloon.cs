@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    
+    [SerializeField] private AudioClip _popSound;
+    [SerializeField] private GameObject _vfxPrefab;
+
     private Tween _flyTween;
     private Tween _swayTween;
     private bool _isPopped;
@@ -14,6 +17,8 @@ public class Balloon : MonoBehaviour
 
     private void OnMouseDown()
     {
+        SoundSystem.Instance.PlaySound(_popSound);
+        Instantiate(_vfxPrefab, transform.position, Quaternion.identity);
         Pop();
     }
     
@@ -51,7 +56,7 @@ public class Balloon : MonoBehaviour
     {
         if (_isPopped) return;
         _isPopped = true;
-
+        
         OnPopped?.Invoke(this);
         ReturnToPool();
     }
