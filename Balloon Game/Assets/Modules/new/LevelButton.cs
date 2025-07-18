@@ -8,9 +8,13 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private Image _buttonImage;
     [SerializeField] private Sprite _lockedSprite;
     [SerializeField] private Sprite _unlockedSprite;
+    [SerializeField] private GameObject _lockObject;
     
     private void Awake()
     {
+        if (_button == null)
+            _button = GetComponent<Button>();
+        
         if (_buttonImage == null)
             _buttonImage = GetComponent<Image>();
     }
@@ -31,6 +35,11 @@ public class LevelButton : MonoBehaviour
         if (_lockedSprite != null && _unlockedSprite != null)
         {
             _buttonImage.sprite = isUnlocked ? _unlockedSprite : _lockedSprite;
+        }
+        
+        if (_lockObject != null)
+        {
+            _lockObject.SetActive(isUnlocked);
         }
     }
 }
