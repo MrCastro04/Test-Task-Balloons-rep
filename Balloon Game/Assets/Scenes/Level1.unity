@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &208472619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1631,10 +1631,10 @@ MonoBehaviour:
   _winScreen: {fileID: 1662677134}
   _loseScreen: {fileID: 208472620}
   _balloonPool: {fileID: 1122268389}
-  _levelTimer: 10
+  _levelTimer: 30
   _flyDuration: 10
   _spawnOffset: 10
-  _targetScore: 2
+  _targetScore: 10
   _levelIndex: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
@@ -2656,6 +2656,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6493177148253571271, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
+      propertyPath: _defaultMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: d677d57e5152d14478c6974dc8b5e0b8, type: 3}
     - target: {fileID: 8097795494906821728, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
       propertyPath: m_Name
       value: --- SYSTEMS ---
@@ -2883,7 +2887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1662677133
 RectTransform:
   m_ObjectHideFlags: 0
