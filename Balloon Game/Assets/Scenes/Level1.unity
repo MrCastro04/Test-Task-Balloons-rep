@@ -896,8 +896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home button
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 5732046255259259336, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 6317804454477498075, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
@@ -1629,10 +1631,10 @@ MonoBehaviour:
   _winScreen: {fileID: 1662677134}
   _loseScreen: {fileID: 208472620}
   _balloonPool: {fileID: 1122268389}
-  _levelTimer: 30
+  _levelTimer: 10
   _flyDuration: 10
   _spawnOffset: 10
-  _targetScore: 12
+  _targetScore: 2
   _levelIndex: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
@@ -3289,8 +3291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home Button
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 5732046255259259336, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 6317804454477498075, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9691c1c669d34dfe8d98617d962b9921, type: 3}

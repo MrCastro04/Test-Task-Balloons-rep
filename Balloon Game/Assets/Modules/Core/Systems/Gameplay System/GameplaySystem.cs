@@ -1,30 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Utility.Singleton;
 using UnityEngine;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class GameplaySystem : Singleton<GameplaySystem>
 {
-    [Header("WIN/LOSE Settings")]
-    [SerializeField] private WinScreen _winScreen;
+    [Header("WIN/LOSE Settings")] [SerializeField]
+    private WinScreen _winScreen;
+
     [SerializeField] private LoseScreen _loseScreen;
 
-    [Header("Level Settings")]
-    [SerializeField] private BalloonPool _balloonPool;
+    [Header("Level Settings")] [SerializeField]
+    private BalloonPool _balloonPool;
+
     [SerializeField] private float _levelTimer = 30f;
     [SerializeField] private float _flyDuration = 3f;
     [SerializeField] private float _spawnOffset = 5f;
     [SerializeField] private int _targetScore = 15;
     [SerializeField] private int _levelIndex = 1;
 
-    [Header("Spawn Area (3D)")]
-    [SerializeField] private Transform _spawnAreaCenter;
+    [Header("Spawn Area (3D)")] [SerializeField]
+    private Transform _spawnAreaCenter;
+
     [SerializeField] private Vector3 _spawnAreaSize = new Vector3(10f, 0f, 10f);
 
-    [Header("UI")]
-    [SerializeField] private TMP_Text _timerText;
+    [Header("UI")] [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _scoreText;
 
     private float _currentTime;
@@ -32,17 +36,21 @@ public class GameplaySystem : Singleton<GameplaySystem>
     private bool _isRunning;
     private Coroutine _levelRoutine;
     private Sprite _balloonsSkin;
+    private bool _levelEnd = false;
 
     private void OnEnable()
     {
-        ActionSystem.SubscribeReaction<StartLevelGA>(StartLevelReaction, ReactionTiming.POST);
-        ActionSystem.SubscribeReaction<EndLevelGA>(EndLevelReaction, ReactionTiming.POST);
+        ActionSystem.SubscribeReaction<StartLevelGA>(OnStartLevel, ReactionTiming.PRE);
+        ActionSystem.SubscribeReaction<EndLevelGA>(OnEndLevel, ReactionTiming.PRE);
     }
 
     private void OnDisable()
     {
-        ActionSystem.UnsubscribeReaction<StartLevelGA>(StartLevelReaction, ReactionTiming.POST);
-        ActionSystem.UnsubscribeReaction<EndLevelGA>(EndLevelReaction, ReactionTiming.POST);
+        if (this != null)
+        {
+            ActionSystem.UnsubscribeReaction<StartLevelGA>(OnStartLevel, ReactionTiming.PRE);
+            ActionSystem.UnsubscribeReaction<EndLevelGA>(OnEndLevel, ReactionTiming.PRE);
+        }
 
         if (_levelRoutine != null)
         {
@@ -53,10 +61,15 @@ public class GameplaySystem : Singleton<GameplaySystem>
         _isRunning = false;
     }
 
-    private void StartLevelReaction(StartLevelGA ga)
+    private void OnStartLevel(StartLevelGA startLevelGa)
     {
-        if (_isRunning) return;
+        if (this == null || _isRunning) return;
 
+        StartCoroutine(StartLevelCoroutine(startLevelGa));
+    }
+
+    private IEnumerator StartLevelCoroutine(StartLevelGA startLevelGa)
+    {
         _balloonsSkin = BalloonSkinSystem.Instance.GetSelectedOrDefaultSkin();
         _isRunning = true;
         _currentTime = _levelTimer;
@@ -71,11 +84,31 @@ public class GameplaySystem : Singleton<GameplaySystem>
             StopCoroutine(_levelRoutine);
 
         _levelRoutine = StartCoroutine(LevelTimerRoutine());
+        
+        yield return null;
+    }
+
+    private void OnEndLevel(EndLevelGA endLevelGa)
+    {
+        if (this == null) return;
+
+        if (endLevelGa.Score == _targetScore)
+        {
+            _winScreen.SetScore(endLevelGa.Score);
+            _winScreen.SetReward(endLevelGa.Score * 10);
+            ActionSystem.Instance.AddReaction(new OpenScreenGA(_winScreen));
+        }
+        else
+        {
+            _loseScreen.SetScore(endLevelGa.Score);
+            _loseScreen.SetReward(endLevelGa.Score * 10);
+            ActionSystem.Instance.AddReaction(new OpenScreenGA(_loseScreen));
+        }
     }
 
     private IEnumerator LevelTimerRoutine()
     {
-        while (_currentTime > 0 && _isRunning)
+        while (_currentTime > 0 && _isRunning && _currentScore != _targetScore)
         {
             SpawnBalloon();
             yield return new WaitForSeconds(1f);
@@ -83,8 +116,32 @@ public class GameplaySystem : Singleton<GameplaySystem>
             _currentTime--;
             UpdateTimerUI();
         }
-
+        
         EndLevel();
+    }
+
+    private void EndLevel()
+    {
+        if (!_isRunning) return;
+
+        _isRunning = false;
+
+        if (_levelRoutine != null)
+        {
+            StopCoroutine(_levelRoutine);
+            _levelRoutine = null;
+        }
+
+        _balloonPool.ClearAll();
+
+        int reward = _currentScore * 10;
+
+        int stars = LevelStarSystem.Instance.CalculateStars(_currentScore, _targetScore);
+
+        SaveSystem.Instance.AddScoreAndReward(_currentScore, reward);
+        SaveSystem.Instance.SaveLevelStars(_levelIndex, stars);
+
+        ActionSystem.Instance.Perform(new EndLevelGA(_currentScore, stars, _levelIndex));
     }
 
     private void SpawnBalloon()
@@ -117,48 +174,6 @@ public class GameplaySystem : Singleton<GameplaySystem>
         balloon.OnPopped -= OnBalloonPopped;
         _currentScore++;
         UpdateScoreUI();
-
-        if (_currentScore >= _targetScore)
-            EndLevel();
-    }
-
-    private void EndLevel()
-    {
-        if (!_isRunning) return;
-
-        _isRunning = false;
-
-        if (_levelRoutine != null)
-        {
-            StopCoroutine(_levelRoutine);
-            _levelRoutine = null;
-        }
-
-        _balloonPool.ClearAll();
-
-        int reward = _currentScore * 10;
-        int stars = LevelStarSystem.Instance.CalculateStars(_currentScore, _targetScore);
-
-        SaveSystem.Instance.AddScoreAndReward(_currentScore, reward);
-        SaveSystem.Instance.SaveLevelStars(_levelIndex, stars);
-        
-        ActionSystem.Instance.AddReaction(new EndLevelGA(_currentScore, stars, _levelIndex));
-    }
-
-    private void EndLevelReaction(EndLevelGA endLevelGa)
-    {
-        if (endLevelGa.Score >= _targetScore)
-        {
-            _winScreen.SetScore(endLevelGa.Score);
-            _winScreen.SetReward(endLevelGa.Score * 10);
-            ActionSystem.Instance.Perform(new OpenScreenGA(_winScreen));
-        }
-        else
-        {
-            _loseScreen.SetScore(endLevelGa.Score);
-            _loseScreen.SetReward(endLevelGa.Score * 10);
-            ActionSystem.Instance.Perform(new OpenScreenGA(_loseScreen));
-        }
     }
 
     private void UpdateTimerUI()
