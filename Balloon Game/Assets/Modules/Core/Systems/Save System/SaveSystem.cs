@@ -54,6 +54,15 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 0;
     }
 
+    public int GetTotalStars(int maxLevel)
+    {
+        int totalStars = 0;
+        for (int i = 1; i <= maxLevel; i++)
+        {
+            totalStars += LoadLevelStars(i);
+        }
+        return totalStars;
+    }
     
     public void SavePlayerAvatarPath(string avatarPath)
     {
