@@ -421,6 +421,7 @@ MonoBehaviour:
   _buttonImage: {fileID: 3181649278492850986}
   _lockedSprite: {fileID: 21300000, guid: 2950633b1a83e0b4fa93843aab8f508b, type: 3}
   _unlockedSprite: {fileID: 0}
+  _lockObject: {fileID: 50430655503749896}
 --- !u!1 &8792686271256021884
 GameObject:
   m_ObjectHideFlags: 0

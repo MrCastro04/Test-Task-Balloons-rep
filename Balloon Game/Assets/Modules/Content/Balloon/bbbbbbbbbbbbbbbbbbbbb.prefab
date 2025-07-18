@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 49843970410937534}
+  _popSound: {fileID: 8300000, guid: fd09a7245847c8c47a8c0684ee69c1ad, type: 3}
+  _vfxPrefab: {fileID: 9157105887711914197, guid: c4f829cb7dd4b864caf8832ec5b1ee55, type: 3}
+  _vfxSpawnPoint: {fileID: 9200018853386423837}
+  _vfxDestroyDelay: 1
 --- !u!212 &49843970410937534
 SpriteRenderer:
   m_ObjectHideFlags: 0
