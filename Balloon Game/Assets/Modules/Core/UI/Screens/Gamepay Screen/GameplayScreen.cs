@@ -1,14 +1,17 @@
 ﻿using System.Collections;
+using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.UI.Screens.Base_Screen;
-using UnityEngine;
 
-public class GameplayScreen : BaseScreen
+namespace Modules.Core.UI.Screens.Gamepay_Screen
 {
-    public override IEnumerator Open()
+    public class GameplayScreen : BaseScreen
     {
-        ActionSystem.Instance.AddReaction(new StartLevelGA());
+        public override IEnumerator Open()
+        {
+            ActionSystem.Instance.AddReaction(new StartLevelGA());
         
-        yield return null;
+            yield return null;
+        }
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.New
+namespace Modules.Core.UI.Screens.Boot_Screen.Loading_Slider
 {
     public class LoadingSlider : MonoBehaviour
     {

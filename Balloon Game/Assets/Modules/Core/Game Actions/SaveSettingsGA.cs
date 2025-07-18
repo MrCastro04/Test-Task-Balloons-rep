@@ -1,13 +1,16 @@
 ﻿using Modules.Core.Systems.Action_System.Scripts;
 
-public class SaveSettingsGA : GameAction
+namespace Modules.Core.Game_Actions
 {
-    public readonly float SoundVolume;
-    public readonly float MusicVolume;
-
-    public SaveSettingsGA(float soundVolume, float musicVolume)
+    public class SaveSettingsGA : GameAction
     {
-        SoundVolume = soundVolume;
-        MusicVolume = musicVolume;
+        public readonly float SoundVolume;
+        public readonly float MusicVolume;
+
+        public SaveSettingsGA(float soundVolume, float musicVolume)
+        {
+            SoundVolume = soundVolume;
+            MusicVolume = musicVolume;
+        }
     }
 }

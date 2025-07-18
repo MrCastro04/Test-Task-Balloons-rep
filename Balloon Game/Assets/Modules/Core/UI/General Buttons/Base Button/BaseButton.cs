@@ -1,35 +1,39 @@
-﻿using UnityEngine;
+﻿using Modules.Core.Systems.Save_System;
+using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BaseButton : MonoBehaviour
+namespace Modules.Core.UI.General_Buttons.Base_Button
 {
-    private Button _button;
-    [SerializeField] private AudioClip _clickSound;
-
-    protected virtual void Awake()
+    public abstract class BaseButton : MonoBehaviour
     {
-        _button = gameObject.GetComponent<Button>();
+        private Button _button;
+        [SerializeField] private AudioClip _clickSound;
 
-        if (_button != null)
+        protected virtual void Awake()
         {
-            _button.onClick.RemoveAllListeners();
+            _button = gameObject.GetComponent<Button>();
 
-            _button.onClick.AddListener(OnClick);
+            if (_button != null)
+            {
+                _button.onClick.RemoveAllListeners();
+
+                _button.onClick.AddListener(OnClick);
+            }
         }
+
+        private void OnClick()
+        {
+            PlayClickSound();
+
+            OnClickAction();
+        }
+
+        protected virtual void PlayClickSound()
+        {
+            if (_clickSound != null)
+                SoundSystem.Instance.PlaySound(_clickSound);
+        }
+
+        protected abstract void OnClickAction();
     }
-
-    private void OnClick()
-    {
-        PlayClickSound();
-
-        OnClickAction();
-    }
-
-    protected virtual void PlayClickSound()
-    {
-        if (_clickSound != null)
-            SoundSystem.Instance.PlaySound(_clickSound);
-    }
-
-    protected abstract void OnClickAction();
 }

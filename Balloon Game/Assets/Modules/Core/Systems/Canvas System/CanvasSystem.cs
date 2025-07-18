@@ -1,120 +1,122 @@
 using System.Collections;
-using UnityEngine;
 using DG.Tweening;
 using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
 using Modules.Core.Systems.Interfaces;
 using Modules.Core.UI.Screens.Base_Screen;
-using Unity.VisualScripting;
+using UnityEngine;
 
-public class CanvasSystem : Modules.Core.Utility.Singleton.Singleton<CanvasSystem>, ISystem
+namespace Modules.Core.Systems.Canvas_System
 {
-    [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private float _fadeSpeed = 0.5f;
-
-    private BaseScreen[] _baseScreens;
-    private BaseScreen _currentScreen;
-    private BaseScreen _previousScreen;
-
-    public void OnEnable()
+    public class CanvasSystem : Modules.Core.Utility.Singleton.Singleton<CanvasSystem>, ISystem
     {
-        /*ActionSystem.SubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private float _fadeSpeed = 0.5f;
+
+        private BaseScreen[] _baseScreens;
+        private BaseScreen _currentScreen;
+        private BaseScreen _previousScreen;
+
+        public void OnEnable()
+        {
+            /*ActionSystem.SubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
         ActionSystem.SubscribeReaction<CloseScreenGA>(CloseScreenReaction, ReactionTiming.POST);*/
         
-        ActionSystem.AttachPerformer<OpenScreenGA>(OpenScreenPerformer);
-        ActionSystem.AttachPerformer<CloseScreenGA>(CloseScreenPerformer);
-    }
+            ActionSystem.AttachPerformer<OpenScreenGA>(OpenScreenPerformer);
+            ActionSystem.AttachPerformer<CloseScreenGA>(CloseScreenPerformer);
+        }
 
-    public void OnDisable()
-    {
-        /*ActionSystem.UnsubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
+        public void OnDisable()
+        {
+            /*ActionSystem.UnsubscribeReaction<OpenScreenGA>(OpenScreenReaction, ReactionTiming.POST);
         ActionSystem.UnsubscribeReaction<CloseScreenGA>(CloseScreenReaction, ReactionTiming.POST);*/
         
-        ActionSystem.DetachPerformer<OpenScreenGA>();
-        ActionSystem.DetachPerformer<CloseScreenGA>();
-    }
+            ActionSystem.DetachPerformer<OpenScreenGA>();
+            ActionSystem.DetachPerformer<CloseScreenGA>();
+        }
 
 
-    public IEnumerator Init(BaseScreen[] baseScreens)
-    {
-        _baseScreens = baseScreens;
+        public IEnumerator Init(BaseScreen[] baseScreens)
+        {
+            _baseScreens = baseScreens;
 
-        foreach (var screen in _baseScreens)
-            screen.gameObject.SetActive(false);
+            foreach (var screen in _baseScreens)
+                screen.gameObject.SetActive(false);
 
-        _currentScreen = _baseScreens[0];
-        _previousScreen = null;
+            _currentScreen = _baseScreens[0];
+            _previousScreen = null;
 
-        _currentScreen.gameObject.SetActive(true);
-        _canvasGroup.alpha = 0f;
+            _currentScreen.gameObject.SetActive(true);
+            _canvasGroup.alpha = 0f;
 
-        yield return FadeIn();
-        yield return _currentScreen.Open();
-    }
+            yield return FadeIn();
+            yield return _currentScreen.Open();
+        }
 
-    private void CloseScreenReaction(CloseScreenGA obj)
-    {
-        StartCoroutine(CloseScreenPerformer(obj));
-    }
+        private void CloseScreenReaction(CloseScreenGA obj)
+        {
+            StartCoroutine(CloseScreenPerformer(obj));
+        }
 
-    private void OpenScreenReaction(OpenScreenGA openScreenGa)
-    {
-        StartCoroutine(OpenScreenPerformer(openScreenGa));
-    }
+        private void OpenScreenReaction(OpenScreenGA openScreenGa)
+        {
+            StartCoroutine(OpenScreenPerformer(openScreenGa));
+        }
 
-    private IEnumerator OpenScreenPerformer(OpenScreenGA openScreenGa)
-    {
-        BaseScreen nextScreen = openScreenGa.NextScreen;
+        private IEnumerator OpenScreenPerformer(OpenScreenGA openScreenGa)
+        {
+            BaseScreen nextScreen = openScreenGa.NextScreen;
 
-        if (_currentScreen == nextScreen)
-            yield break;
+            if (_currentScreen == nextScreen)
+                yield break;
 
-        _previousScreen = _currentScreen;
-        _currentScreen = nextScreen;
+            _previousScreen = _currentScreen;
+            _currentScreen = nextScreen;
 
-        yield return FadeOut();
+            yield return FadeOut();
 
-        if (_previousScreen != null)
-            _previousScreen.gameObject.SetActive(false);
+            if (_previousScreen != null)
+                _previousScreen.gameObject.SetActive(false);
 
-        _currentScreen.gameObject.SetActive(true);
-        _canvasGroup.alpha = 0f;
+            _currentScreen.gameObject.SetActive(true);
+            _canvasGroup.alpha = 0f;
 
-        yield return FadeIn();
-        yield return _currentScreen.Open();
-    }
+            yield return FadeIn();
+            yield return _currentScreen.Open();
+        }
 
-    private IEnumerator CloseScreenPerformer(CloseScreenGA closeScreenGa)
-    {
-        if (_previousScreen == null)
-            yield break;
+        private IEnumerator CloseScreenPerformer(CloseScreenGA closeScreenGa)
+        {
+            if (_previousScreen == null)
+                yield break;
 
-        yield return FadeOut();
+            yield return FadeOut();
 
-        _currentScreen.gameObject.SetActive(false);
+            _currentScreen.gameObject.SetActive(false);
 
-        var temp = _currentScreen;
-        _currentScreen = _previousScreen;
-        _previousScreen = temp;
+            var temp = _currentScreen;
+            _currentScreen = _previousScreen;
+            _previousScreen = temp;
 
-        _currentScreen.gameObject.SetActive(true);
-        _canvasGroup.alpha = 0f;
+            _currentScreen.gameObject.SetActive(true);
+            _canvasGroup.alpha = 0f;
 
-        yield return FadeIn();
-        yield return _currentScreen.Open();
-    }
+            yield return FadeIn();
+            yield return _currentScreen.Open();
+        }
 
-    private IEnumerator FadeIn()
-    {
-        _canvasGroup.interactable = true;
-        _canvasGroup.blocksRaycasts = true;
-        yield return _canvasGroup.DOFade(1f, _fadeSpeed).WaitForCompletion();
-    }
+        private IEnumerator FadeIn()
+        {
+            _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
+            yield return _canvasGroup.DOFade(1f, _fadeSpeed).WaitForCompletion();
+        }
 
-    private IEnumerator FadeOut()
-    {
-        _canvasGroup.interactable = false;
-        _canvasGroup.blocksRaycasts = false;
-        yield return _canvasGroup.DOFade(0f, _fadeSpeed).WaitForCompletion();
+        private IEnumerator FadeOut()
+        {
+            _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
+            yield return _canvasGroup.DOFade(0f, _fadeSpeed).WaitForCompletion();
+        }
     }
 }

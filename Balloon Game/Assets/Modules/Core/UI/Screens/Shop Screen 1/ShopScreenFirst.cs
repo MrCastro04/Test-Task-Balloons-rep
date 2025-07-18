@@ -1,49 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Modules.Core.Systems.Balloon_Skin_System;
+using Modules.Core.Systems.Save_System;
+using Modules.Core.UI.General_Buttons.Balloon_Block_Button;
 using Modules.Core.UI.Screens.Base_Screen;
 using TMPro;
 using UnityEngine;
 
-public class ShopScreenFirst : BaseScreen
+namespace Modules.Core.UI.Screens.Shop_Screen_1
 {
-    [SerializeField] private TMP_Text _rewardText;
-    [SerializeField] private List<BalloonBlockButton> _buyButtons;
-    [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
-    
-    public override IEnumerator Open()
+    public class ShopScreenFirst : BaseScreen
     {
-        UpdateReward();
-        UpdateBuyTextPhoto();
-        UpdateSelectedSkin();
-        yield return base.Open();
-    }
+        [SerializeField] private TMP_Text _rewardText;
+        [SerializeField] private List<BalloonBlockButton> _buyButtons;
+        [SerializeField] private BalloonSkinSystem _balloonSkinSystem;
     
-    private void UpdateSelectedSkin()
-    {
-        Sprite selectedSkin = _balloonSkinSystem.SelectedSkin;
-        foreach (var button in _buyButtons)
+        public override IEnumerator Open()
         {
-            button.UpdateSelectedHighlight(selectedSkin);
+            UpdateReward();
+            UpdateBuyTextPhoto();
+            UpdateSelectedSkin();
+            yield return base.Open();
         }
-    }
-
-    private void UpdateBuyTextPhoto()
-    {
-        foreach (var button in _buyButtons)
+    
+        private void UpdateSelectedSkin()
         {
-            if (_balloonSkinSystem.PlayerBalloonSkins.Contains(button.SkinOnThisButton))
+            Sprite selectedSkin = _balloonSkinSystem.SelectedSkin;
+            foreach (var button in _buyButtons)
             {
-                button.RemoveBuyTextPhoto();
+                button.UpdateSelectedHighlight(selectedSkin);
             }
         }
-    }
 
-    private void UpdateReward()
-    {
-        if (_rewardText != null)
+        private void UpdateBuyTextPhoto()
         {
-            int reward = SaveSystem.Instance.LoadLastReward();
-            _rewardText.text = $"{reward}";
+            foreach (var button in _buyButtons)
+            {
+                if (_balloonSkinSystem.PlayerBalloonSkins.Contains(button.SkinOnThisButton))
+                {
+                    button.RemoveBuyTextPhoto();
+                }
+            }
+        }
+
+        private void UpdateReward()
+        {
+            if (_rewardText != null)
+            {
+                int reward = SaveSystem.Instance.LoadLastReward();
+                _rewardText.text = $"{reward}";
+            }
         }
     }
 }

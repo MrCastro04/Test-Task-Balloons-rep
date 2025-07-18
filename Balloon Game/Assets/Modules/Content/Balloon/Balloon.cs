@@ -1,80 +1,83 @@
 ﻿using System;
-using System.Collections;
 using DG.Tweening;
+using Modules.Core.Systems.Save_System;
 using UnityEngine;
 
-public class Balloon : MonoBehaviour
+namespace Modules.Content.Balloon
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private AudioClip _popSound;
-    [SerializeField] private GameObject _vfxPrefab;
-
-    private Tween _flyTween;
-    private Tween _swayTween;
-    private bool _isPopped;
-
-    public event Action<Balloon> OnPopped;
-
-    private void OnMouseDown()
+    public class Balloon : MonoBehaviour
     {
-        SoundSystem.Instance.PlaySound(_popSound);
-        Instantiate(_vfxPrefab, transform.position, Quaternion.identity);
-        Pop();
-    }
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private AudioClip _popSound;
+        [SerializeField] private GameObject _vfxPrefab;
+
+        private Tween _flyTween;
+        private Tween _swayTween;
+        private bool _isPopped;
+
+        public event Action<Balloon> OnPopped;
+
+        private void OnMouseDown()
+        {
+            SoundSystem.Instance.PlaySound(_popSound);
+            Instantiate(_vfxPrefab, transform.position, Quaternion.identity);
+            Pop();
+        }
     
-    public void SetSkin(Sprite newSkin)
-    {
-        Debug.Log("Skin set");
-        _spriteRenderer.sprite = newSkin;
-    }
+        public void SetSkin(Sprite newSkin)
+        {
+            Debug.Log("Skin set");
+            _spriteRenderer.sprite = newSkin;
+        }
 
-    public void FlyTo3D(Vector3 targetPos, float duration)
-    {
-        _isPopped = false;
-        KillTweens();
+        public void FlyTo3D(Vector3 targetPos, float duration)
+        {
+            _isPopped = false;
+            KillTweens();
 
-        Vector3 startPos = transform.position;
-        startPos.x += UnityEngine.Random.Range(-2f, 2f);
-        startPos.z += UnityEngine.Random.Range(-2f, 2f);
-        transform.position = startPos;
+            Vector3 startPos = transform.position;
+            startPos.x += UnityEngine.Random.Range(-2f, 2f);
+            startPos.z += UnityEngine.Random.Range(-2f, 2f);
+            transform.position = startPos;
 
-        _swayTween = transform
-            .DOMoveX(startPos.x + UnityEngine.Random.Range(-0.5f, 0.5f), 1.5f)
-            .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo);
+            _swayTween = transform
+                .DOMoveX(startPos.x + UnityEngine.Random.Range(-0.5f, 0.5f), 1.5f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
 
-        _flyTween = transform
-            .DOMoveY(targetPos.y, duration)
-            .SetEase(Ease.InCubic)
-            .OnComplete(() =>
-            {
-                ReturnToPool();
-            });
-    }
+            _flyTween = transform
+                .DOMoveY(targetPos.y, duration)
+                .SetEase(Ease.InCubic)
+                .OnComplete(() =>
+                {
+                    ReturnToPool();
+                });
+        }
 
-    public void Pop()
-    {
-        if (_isPopped) return;
-        _isPopped = true;
+        public void Pop()
+        {
+            if (_isPopped) return;
+            _isPopped = true;
         
-        OnPopped?.Invoke(this);
-        ReturnToPool();
-    }
+            OnPopped?.Invoke(this);
+            ReturnToPool();
+        }
 
-    private void ReturnToPool()
-    {
-        KillTweens();
-        gameObject.SetActive(false);
-    }
+        private void ReturnToPool()
+        {
+            KillTweens();
+            gameObject.SetActive(false);
+        }
 
-    private void KillTweens()
-    {
-        _flyTween?.Kill();
-        _swayTween?.Kill();
-    }
+        private void KillTweens()
+        {
+            _flyTween?.Kill();
+            _swayTween?.Kill();
+        }
 
-    private void OnDisable()
-    {
-        KillTweens();
+        private void OnDisable()
+        {
+            KillTweens();
+        }
     }
 }

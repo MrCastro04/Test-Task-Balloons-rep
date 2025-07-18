@@ -1,22 +1,24 @@
-﻿using Modules.Core.Systems.Action_System.Scripts;
-using Modules.Core.UI.Screens.Base_Screen;
+﻿using Modules.Core.UI.Screens.Base_Screen;
 using TMPro;
 using UnityEngine;
 
-public class WinScreen : BaseScreen
+namespace Modules.Core.UI.Screens.Win_Screen
 {
-    [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private TMP_Text _rewardText;
-    
-    public void SetScore(int score)
+    public class WinScreen : BaseScreen
     {
-        if (_scoreText != null)
-            _scoreText.text = $"{score}";
-    }
+        [SerializeField] private TMP_Text _scoreText;
+        [SerializeField] private TMP_Text _rewardText;
     
-    public void SetReward(int reward)
-    {
-        if (_rewardText != null)
-            _rewardText.text = $"{reward}";
+        public void SetScore(int score)
+        {
+            if (_scoreText != null)
+                _scoreText.text = $"{score}";
+        }
+    
+        public void SetReward(int reward)
+        {
+            if (_rewardText != null)
+                _rewardText.text = $"{reward}";
+        }
     }
 }

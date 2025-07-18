@@ -1,9 +1,10 @@
 ﻿using Modules.Core.Game_Actions;
 using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.UI.General_Buttons.Base_Button;
 using Modules.Core.UI.Screens.Base_Screen;
 using UnityEngine;
 
-namespace Modules.Core.UI.Open_Next_Screen_Button
+namespace Modules.Core.UI.General_Buttons.Open_Next_Screen_Button
 {
     public class OpenNextScreenButton : BaseButton
     {

@@ -1,11 +1,14 @@
 ﻿using Modules.Core.Systems.Action_System.Scripts;
 
-public class LoadLevelSceneGA : GameAction
+namespace Modules.Core.Game_Actions
 {
-    public readonly int LevelIndex;
-
-    public LoadLevelSceneGA(int levelIndex)
+    public class LoadLevelSceneGA : GameAction
     {
-        LevelIndex = levelIndex;
+        public readonly int LevelIndex;
+
+        public LoadLevelSceneGA(int levelIndex)
+        {
+            LevelIndex = levelIndex;
+        }
     }
 }

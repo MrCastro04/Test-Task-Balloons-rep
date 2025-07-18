@@ -1,13 +1,18 @@
-﻿using Modules.Core.Systems.Action_System.Scripts;
+﻿using Modules.Core.Game_Actions;
+using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.UI.General_Buttons.Base_Button;
 using UnityEngine;
 
-public class ChangeVolumeButton : BaseButton
+namespace Modules.Core.UI.Screens.Settings_Screen.Change_Volume_Button
 {
-    [SerializeField] private VolumeType _volumeType;
-    [SerializeField] private float _delta = 0.1f; 
-
-    protected override void OnClickAction()
+    public class ChangeVolumeButton : BaseButton
     {
-        ActionSystem.Instance.Perform(new ChangeVolumeGA(_volumeType, _delta));
+        [SerializeField] private VolumeType _volumeType;
+        [SerializeField] private float _delta = 0.1f; 
+
+        protected override void OnClickAction()
+        {
+            ActionSystem.Instance.Perform(new ChangeVolumeGA(_volumeType, _delta));
+        }
     }
 }

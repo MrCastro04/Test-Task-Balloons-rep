@@ -1,29 +1,32 @@
-﻿using Modules.Core.Systems.Action_System.Scripts;
+﻿using Modules.Core.UI.General_Buttons.Base_Button;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyBalloonBlock : BaseButton
+namespace Modules.Core.UI.General_Buttons.Buy_Bolloon_Block
 {
-    [SerializeField] private int _skinId;
-    [SerializeField] private Sprite _skinSprite;
-    [SerializeField] private Image _skinImage;
-
-    public int SkinId
+    public class BuyBalloonBlock : BaseButton
     {
-        get => _skinId;
-        set => _skinId = value;
-    }
+        [SerializeField] private int _skinId;
+        [SerializeField] private Sprite _skinSprite;
+        [SerializeField] private Image _skinImage;
 
-    public Sprite SkinSprite
-    {
-        get => _skinSprite;
-        set
+        public int SkinId
         {
-            _skinSprite = value;
-            if (_skinImage != null)
-                _skinImage.sprite = _skinSprite;
+            get => _skinId;
+            set => _skinId = value;
         }
-    }
 
-    protected override void OnClickAction() { }
+        public Sprite SkinSprite
+        {
+            get => _skinSprite;
+            set
+            {
+                _skinSprite = value;
+                if (_skinImage != null)
+                    _skinImage.sprite = _skinSprite;
+            }
+        }
+
+        protected override void OnClickAction() { }
+    }
 }

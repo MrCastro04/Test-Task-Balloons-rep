@@ -1,14 +1,17 @@
-﻿using UnityEngine;
-using Modules.Core.Systems.Action_System.Scripts;
+﻿using Modules.Core.Systems.Action_System.Scripts;
+using UnityEngine;
 
-public class BuyBalloonGA : GameAction
+namespace Modules.Core.Game_Actions
 {
-    public readonly int BalloonIndex;
-    public readonly Sprite BalloonSprite;
-
-    public BuyBalloonGA(int balloonIndex, Sprite balloonSprite)
+    public class BuyBalloonGA : GameAction
     {
-        BalloonIndex = balloonIndex;
-        BalloonSprite = balloonSprite;
+        public readonly int BalloonIndex;
+        public readonly Sprite BalloonSprite;
+
+        public BuyBalloonGA(int balloonIndex, Sprite balloonSprite)
+        {
+            BalloonIndex = balloonIndex;
+            BalloonSprite = balloonSprite;
+        }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Modules.Core.Utility.Singleton;
 
-public class LevelStarSystem : Singleton<LevelStarSystem>
+namespace Modules.@new
 {
-    public int CalculateStars(int currentScore, int targetScore)
+    public class LevelStarSystem : Singleton<LevelStarSystem>
     {
-        if (currentScore == targetScore) return 3;
-        if (currentScore >= targetScore * 0.66f) return 2;
-        if (currentScore >= targetScore * 0.33f) return 1;
-        return 0;
+        public int CalculateStars(int currentScore, int targetScore)
+        {
+            if (currentScore == targetScore) return 3;
+            if (currentScore >= targetScore * 0.66f) return 2;
+            if (currentScore >= targetScore * 0.33f) return 1;
+            return 0;
+        }
     }
 }

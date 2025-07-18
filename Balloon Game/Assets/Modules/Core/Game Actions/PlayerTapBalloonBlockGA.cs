@@ -1,18 +1,23 @@
 ﻿using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.UI.Screens.Buy_Screen;
+using Modules.Core.UI.Screens.Select_Screen;
 using UnityEngine;
 
-public class PlayerTapBalloonBlockGA : GameAction
+namespace Modules.Core.Game_Actions
 {
-    public readonly int ID;
-    public readonly Sprite BalloonBlockSkin;
-    public readonly BuyScreen BuyScreen;
-    public readonly SelectScreen SelectScreen;
-
-    public PlayerTapBalloonBlockGA(int id, Sprite balloonBlockSkin, BuyScreen buyScreen, SelectScreen selectScreen)
+    public class PlayerTapBalloonBlockGA : GameAction
     {
-        ID = id;
-        BalloonBlockSkin = balloonBlockSkin;
-        BuyScreen = buyScreen;
-        SelectScreen = selectScreen;
+        public readonly int ID;
+        public readonly Sprite BalloonBlockSkin;
+        public readonly BuyScreen BuyScreen;
+        public readonly SelectScreen SelectScreen;
+
+        public PlayerTapBalloonBlockGA(int id, Sprite balloonBlockSkin, BuyScreen buyScreen, SelectScreen selectScreen)
+        {
+            ID = id;
+            BalloonBlockSkin = balloonBlockSkin;
+            BuyScreen = buyScreen;
+            SelectScreen = selectScreen;
+        }
     }
 }

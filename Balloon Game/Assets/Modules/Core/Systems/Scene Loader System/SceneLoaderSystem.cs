@@ -1,10 +1,11 @@
-﻿
-    using System.Collections;
-    using Modules.Core.Systems.Action_System.Scripts;
-    using Modules.Core.Utility.Singleton;
-    using UnityEngine;
-    using UnityEngine.SceneManagement;
+﻿using System.Collections;
+using Modules.Core.Game_Actions;
+using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.Utility.Singleton;
+using UnityEngine.SceneManagement;
 
+namespace Modules.Core.Systems.Scene_Loader_System
+{
     public class SceneLoaderSystem : Singleton<SceneLoaderSystem>
     {
         private void OnEnable()
@@ -23,3 +24,4 @@
             yield return null;
         }
     }
+}

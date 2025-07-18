@@ -1,30 +1,33 @@
 ﻿using Modules.Core.Utility.Singleton;
 using UnityEngine;
 
-public class UIPositionHelper : Singleton<UIPositionHelper>
+namespace Modules.Core.Utility.UI_Position_Helper
 {
-    public static Vector2 GetCanvasCenterPosition(RectTransform target)
+    public class UIPositionHelper : Singleton<UIPositionHelper>
     {
-        Canvas canvas = target.GetComponentInParent<Canvas>();
-        if (canvas == null)
+        public static Vector2 GetCanvasCenterPosition(RectTransform target)
         {
-            Debug.LogError("Нет Canvas у объекта: " + target.name);
-            return Vector2.zero;
-        }
+            Canvas canvas = target.GetComponentInParent<Canvas>();
+            if (canvas == null)
+            {
+                Debug.LogError("Нет Canvas у объекта: " + target.name);
+                return Vector2.zero;
+            }
         
-        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         
-        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
         
-        Vector2 localPoint;
+            Vector2 localPoint;
         
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect,
-            screenCenter,
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-            out localPoint
-        );
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect,
+                screenCenter,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+                out localPoint
+            );
 
-        return localPoint;
+            return localPoint;
+        }
     }
 }

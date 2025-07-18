@@ -1,11 +1,14 @@
 ﻿using Modules.Core.Systems.Action_System.Scripts;
 
-public class SavePlayerNameGA : GameAction
+namespace Modules.Core.Game_Actions
 {
-    public readonly string PlayerName;
-
-    public SavePlayerNameGA(string playerName)
+    public class SavePlayerNameGA : GameAction
     {
-        PlayerName = playerName;
+        public readonly string PlayerName;
+
+        public SavePlayerNameGA(string playerName)
+        {
+            PlayerName = playerName;
+        }
     }
 }

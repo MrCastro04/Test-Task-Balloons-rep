@@ -1,8 +1,10 @@
-﻿
-    using System.Collections;
-    using Modules.Core.UI.Screens.Base_Screen;
-    using UnityEngine;
+﻿using System.Collections;
+using Modules.Core.UI.General_Buttons.Select_Balloon_Button;
+using Modules.Core.UI.Screens.Base_Screen;
+using UnityEngine;
 
+namespace Modules.Core.UI.Screens.Select_Screen
+{
     public class SelectScreen : BaseScreen
     {
         [SerializeField] private SelectBalloonButton _balloonBlockButton;
@@ -12,10 +14,10 @@
         
         public override IEnumerator Open()
         {
-           _balloonBlockButton.SkinId = _cashedId;
-           _balloonBlockButton.SkinSprite = _cashedSkinOnThisButton;
+            _balloonBlockButton.SkinId = _cashedId;
+            _balloonBlockButton.SkinSprite = _cashedSkinOnThisButton;
 
-           yield return null;
+            yield return null;
         }
         
         public void Load(int id, Sprite balloonBlockSkin)
@@ -25,3 +27,4 @@
             _cashedSkinOnThisButton = balloonBlockSkin;
         }
     }
+}

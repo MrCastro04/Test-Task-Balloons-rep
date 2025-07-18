@@ -1,19 +1,25 @@
-﻿using Modules.Core.Systems.Action_System.Scripts;
+﻿using Modules.Core.Game_Actions;
+using Modules.Core.Systems.Action_System.Scripts;
+using Modules.Core.UI.General_Buttons.Base_Button;
+using Modules.Core.UI.General_Buttons.Buy_Bolloon_Block;
 using UnityEngine;
 
-public class BuyButton : BaseButton
+namespace Modules.Core.UI.General_Buttons.Buy_Button
 {
-    [SerializeField] private BuyBalloonBlock _balloonBlock;
-    
-     private int _balloonIndex;
-     private Sprite _balloonSprite;
-
-    protected override void OnClickAction()
+    public class BuyButton : BaseButton
     {
-        _balloonIndex = _balloonBlock.SkinId;
+        [SerializeField] private BuyBalloonBlock _balloonBlock;
+    
+        private int _balloonIndex;
+        private Sprite _balloonSprite;
 
-        _balloonSprite = _balloonBlock.SkinSprite;
+        protected override void OnClickAction()
+        {
+            _balloonIndex = _balloonBlock.SkinId;
+
+            _balloonSprite = _balloonBlock.SkinSprite;
         
-        ActionSystem.Instance.Perform(new BuyBalloonGA(_balloonIndex, _balloonSprite));
+            ActionSystem.Instance.Perform(new BuyBalloonGA(_balloonIndex, _balloonSprite));
+        }
     }
 }

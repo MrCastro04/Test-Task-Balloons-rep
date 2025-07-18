@@ -1,18 +1,22 @@
 using System.Collections;
+using Modules.Core.Systems.Canvas_System;
 using Modules.Core.UI.Screens.Base_Screen;
 using UnityEngine;
 
-public class GameBoot : MonoBehaviour
+namespace Modules.Core.Game_Bootstrap.Game_Boot
 {
-    [SerializeField] private CanvasSystem _canvasSystem;
-    [SerializeField] private BaseScreen[] _baseScreens;
-
-    private IEnumerator Start()
+    public class GameBoot : MonoBehaviour
     {
-       yield return _canvasSystem.Init(_baseScreens);
-        
-        Debug.Log("Меню запущено!");
+        [SerializeField] private CanvasSystem _canvasSystem;
+        [SerializeField] private BaseScreen[] _baseScreens;
 
-        yield return null;
+        private IEnumerator Start()
+        {
+            yield return _canvasSystem.Init(_baseScreens);
+        
+            Debug.Log("Меню запущено!");
+
+            yield return null;
+        }
     }
 }

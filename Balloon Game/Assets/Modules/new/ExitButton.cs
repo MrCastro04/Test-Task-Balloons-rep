@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using Modules.Core.UI.General_Buttons.Base_Button;
+using UnityEngine;
 
-public class ExitButton : BaseButton
+namespace Modules.@new
 {
-    protected override void OnClickAction()
+    public class ExitButton : BaseButton
     {
-        Application.Quit();
+        protected override void OnClickAction()
+        {
+            Application.Quit();
+        }
     }
 }

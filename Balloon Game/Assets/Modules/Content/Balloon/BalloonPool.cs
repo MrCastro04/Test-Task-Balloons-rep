@@ -1,46 +1,49 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BalloonPool : MonoBehaviour
+namespace Modules.Content.Balloon
 {
-    [SerializeField] private GameObject _balloonPrefab;
-    [SerializeField] private Transform _poolParent;
-
-    private Queue<Balloon> _balloonQueue = new();
-    private List<Balloon> _activeBalloons = new(); 
-
-    public void PopulatePool(int count, Sprite selectedSkin)
+    public class BalloonPool : MonoBehaviour
     {
-        _balloonQueue.Clear();
-        _activeBalloons.Clear();
+        [SerializeField] private GameObject _balloonPrefab;
+        [SerializeField] private Transform _poolParent;
 
-        for (int i = 0; i < count; i++)
+        private Queue<Balloon> _balloonQueue = new();
+        private List<Balloon> _activeBalloons = new(); 
+
+        public void PopulatePool(int count, Sprite selectedSkin)
         {
-            Balloon balloon = Instantiate(_balloonPrefab, _poolParent).GetComponent<Balloon>();
+            _balloonQueue.Clear();
+            _activeBalloons.Clear();
+
+            for (int i = 0; i < count; i++)
+            {
+                Balloon balloon = Instantiate(_balloonPrefab, _poolParent).GetComponent<Balloon>();
             
-            balloon.SetSkin(selectedSkin);
-            balloon.gameObject.SetActive(false);
-            _balloonQueue.Enqueue(balloon);
+                balloon.SetSkin(selectedSkin);
+                balloon.gameObject.SetActive(false);
+                _balloonQueue.Enqueue(balloon);
+            }
         }
-    }
 
-    public Balloon GetBalloon()
-    {
-        if (_balloonQueue.Count == 0) return null;
-
-        var balloon = _balloonQueue.Dequeue();
-        balloon.gameObject.SetActive(true);
-        _activeBalloons.Add(balloon);
-        return balloon;
-    }
-
-    public void ClearAll()
-    {
-        foreach (var balloon in _activeBalloons)
+        public Balloon GetBalloon()
         {
-            balloon.gameObject.SetActive(false);
-            _balloonQueue.Enqueue(balloon);
+            if (_balloonQueue.Count == 0) return null;
+
+            var balloon = _balloonQueue.Dequeue();
+            balloon.gameObject.SetActive(true);
+            _activeBalloons.Add(balloon);
+            return balloon;
         }
-        _activeBalloons.Clear();
+
+        public void ClearAll()
+        {
+            foreach (var balloon in _activeBalloons)
+            {
+                balloon.gameObject.SetActive(false);
+                _balloonQueue.Enqueue(balloon);
+            }
+            _activeBalloons.Clear();
+        }
     }
 }
