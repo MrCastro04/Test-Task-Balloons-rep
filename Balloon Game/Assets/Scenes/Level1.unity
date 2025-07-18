@@ -1629,10 +1629,11 @@ MonoBehaviour:
   _winScreen: {fileID: 1662677134}
   _loseScreen: {fileID: 208472620}
   _balloonPool: {fileID: 1122268389}
-  _levelTimer: 10
+  _levelTimer: 30
   _flyDuration: 10
   _spawnOffset: 10
-  _targetScore: 1
+  _targetScore: 12
+  _levelIndex: 1
   _spawnAreaCenter: {fileID: 444377137}
   _spawnAreaSize: {x: 10, y: 0, z: 10}
   _timerText: {fileID: 863072297}
@@ -2350,6 +2351,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310057763}
   m_CullTransparentMesh: 1
+--- !u!1 &1329765996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1329765997}
+  - component: {fileID: 1329765998}
+  m_Layer: 0
+  m_Name: Level Star System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1329765997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329765996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1424845811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1329765998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329765996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60014bc81e7c4c1bb6c26b91872eda7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1333058240
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,6 +2669,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4961767143161506030, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 278481469}
+    - targetCorrespondingSourceObject: {fileID: 4961767143161506030, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1329765997}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8bc486a2d4808842ade1f64cf93332c, type: 3}
 --- !u!4 &1424845811 stripped

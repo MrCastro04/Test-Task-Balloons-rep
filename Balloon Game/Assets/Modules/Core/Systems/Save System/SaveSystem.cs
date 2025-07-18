@@ -37,6 +37,24 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         }
     }
     
+    public void SaveLevelStars(int levelIndex, int stars)
+    {
+        string key = $"LevelStars_{levelIndex}";
+        int previousStars = PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 0;
+        if (stars > previousStars)
+        {
+            PlayerPrefs.SetInt(key, stars);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public int LoadLevelStars(int levelIndex)
+    {
+        string key = $"LevelStars_{levelIndex}";
+        return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetInt(key) : 0;
+    }
+
+    
     public void SavePlayerAvatarPath(string avatarPath)
     {
         PlayerPrefs.SetString(PlayerAvatarPathKey, avatarPath);
