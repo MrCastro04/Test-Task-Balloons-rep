@@ -1,14 +1,18 @@
 # Trident Media (Company) Test Task on position - Junior Unity Game Developer
 
 Date of receipt of test assignment - 15.07.2025.
+
 Task submission date (apk file and final push to GitHub) - 18.07.2025.
+
 The test assignment was designed to last three days.
 
 if you wanna see code , you should choose branch named "fitches". 
 (because I accidentally pushed the wrong changes to the “main” branch)
 
 This game should be available on phones. 
+
 The goal of the game is to pop flying balls and earn points. 
+
 Detailed information is available at the link “Test Task Link.”
 
 Test Task Link:
