@@ -1,4 +1,6 @@
-# Test-Task-Balloons-rep
+# Trident Media (Company) Test Task on position - Junior Unity Game Developer
+
+Task submission date (apk file and final push to GitHub) - 18.07.2025
 
 if you wanna see code , you should choose branch named "fitches". 
 (because I accidentally pushed the wrong changes to the “main” branch)
