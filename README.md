@@ -1,3 +1,5 @@
 # Test-Task-Balloons-rep
 
 Main Branch in this project -> fitches
+
+https://docs.google.com/document/d/1OAp5TeI-G8_0MeNbE1eoAGMjFu4lAYoUJ9mDOPt0Nu8/edit?tab=t.0#heading=h.cjfcvrd125fz
